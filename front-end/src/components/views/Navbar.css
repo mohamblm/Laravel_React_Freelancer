@@ -1,0 +1,153 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+:root{
+  --primary_color:rgb(158, 0, 244);
+}
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .8rem 2rem;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border-bottom:2px solid var(--primary_color) ;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar .links {
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar .links a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  transition: 0.3s;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.navbar .links a:hover {
+  color: var(--primary_color);
+  /* background-color: rgb(158, 0, 244);
+  border-color: #fff; */
+}
+
+.menu-icon {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.profile .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--primary_color);
+}
+
+.profile .dis_profile {
+  display: none;
+  list-style: none;
+  cursor: pointer;
+  width: 200px;
+  z-index: 10;
+}
+
+.profile .dis_profile li {
+  margin: 0.5rem;
+  font-size: 18px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.profile .dis_profile li:hover{
+  scale: 1.02;
+}
+
+.profile .dis_profile div {
+  background-color: rgb(237, 237, 237);
+  height: 1px;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.profile .triangle {
+  display: none;
+  width: 10px;
+  height: 10px;
+  background-color: #440075;
+
+}
+
+.profile:hover .triangle {
+  display: block;
+  position: absolute;
+  top: 54px;
+  right: 46px;
+  rotate: -45deg;
+  border: 1px solid var(--primary_color);
+  border-bottom: none;
+  border-left: none;
+  z-index: 100;
+
+}
+
+.profile:hover .dis_profile {
+  display: block;
+  position: absolute;
+  right: 20px;
+  top: 58px;
+  background-color: #440075;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--primary_color);
+}
+
+
+
+
+
+
+@media (max-width: 768px) {
+  /* .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+    } */
+
+  .navbar .menu-icon {
+    display: block;
+    color: #fff;
+  }
+
+  .navbar .links {
+    flex-direction: column;
+    /* position: absolute; */
+    width: 100%;
+    /* right: 0;
+      top: 40px; */
+    gap: 0.5rem;
+    /* background-color: #555; */
+    display: none;
+  }
+
+  .navbar .links.active {
+    display: flex;
+  }
+
+  .navbar .links a {
+    width: 100%;
+    text-align: center;
+  }
+}

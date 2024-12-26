@@ -1,0 +1,17 @@
+.showService{
+    display: grid;
+    grid-row: 50% 50%;
+
+}
+
+ .avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.btn-r{
+    background-color: aqua;
+}
+.btn-r:hover{
+    background-color: rgba(0, 255, 255, 0.943);
+}
