@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
 
@@ -21,8 +22,12 @@ class ProfileController extends Controller
      */
     public function store(StoreProfileRequest $request)
     {
-        // $validated = $request->validated();
-        // Profile::create($validated);
+        $validated = $request->validated();
+        if ($request->hasFile('avatar')) {
+            $imagePath = $request->file('avatar')->store('images', 'public');
+            $validated['avatar'] = $imagePath; // Update photo path in validated data
+        }
+        Profile::create($validated);
 
         return response()->json(['message' => 'Profile created successfully!'], 201);
     }
@@ -40,9 +45,13 @@ class ProfileController extends Controller
      */
     public function update(UpdateProfileRequest $request, $profileId)
     {
-        
+        // return response()->json(['message' => $request->all()], 200);
         $profile = Profile::findOrFail($profileId); // Retrieve the profile being updated
         $validated = $request->validated(); // Get validated data
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('images', 'public'); //save the profile image in public/images folder
+            $validated['avatar'] = $avatarPath; // Update photo path in validated data
+        }
         $profile->update($validated); // Update the profile with new data
 
     return response()->json(['message' => 'Profile updated successfully!'], 200);

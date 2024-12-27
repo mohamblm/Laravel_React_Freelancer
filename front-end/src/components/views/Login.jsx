@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import {login} from '../../redux/actions/authActions';
 import axios from '../../api/axios';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 
@@ -14,6 +14,7 @@ const ModalLogin = ({ show, onClose,toggle }) => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const dispatch = useDispatch();
+    const navigate=useNavigate();
     const { user, token, loading, error } = useSelector(state => state.auth);
 
     useEffect(() => {
@@ -32,8 +33,9 @@ const ModalLogin = ({ show, onClose,toggle }) => {
             .then((res) => {
                 dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
                 localStorage.setItem('ACCESS_TOKEN', res.data.token);
+                // onClose();
+                navigate('/index')
                 onClose();
-
             })
             .catch((error) => {
                 const response = error.response;

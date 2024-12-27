@@ -18,7 +18,7 @@ export const  authReducer=(state=inistialState,action)=>{
         case 'LOGIN_FAILURE':
             return {...state, user:null,token:null, loading:false, error:action.payload};
         case 'SIGNUP_SUCCESS':
-            return {...state, user:action.payload.user,token:action.payload.token, loading:false, error:null};
+            return {...state, loading:false, error:null};
         case 'LOGOUT_SUCCESS':
             return {...state, user:null,token:null, loading:false, error:null};
         
@@ -29,9 +29,9 @@ export const  authReducer=(state=inistialState,action)=>{
         case 'REST_ERRORS':
             return {...state, error:null};
         case 'GET_USER':
-            return {...state, user:action.payload}
+            return {...state, user:action.payload, loading:false}
         case 'NOTIFICATION':
-            return {...state,notification:action.payload}
+            return {...state,notification:action.payload, loading:false }
         case 'STOP_NOTIFICATION':
             return {...state,notification:null}
         default:

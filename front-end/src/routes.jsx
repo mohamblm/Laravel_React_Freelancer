@@ -12,7 +12,7 @@ import ShowService from './components/views/services/ShowService';
         element:<MainPage />,
         children:[
             {
-                path:'/',
+                path:'/index',
                 element:<Home />,
             },
             {

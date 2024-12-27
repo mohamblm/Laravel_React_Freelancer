@@ -21,7 +21,8 @@ Route::middleware('auth:sanctum')->group(function () {
         return response()->json($user);
     });
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::apiResource('/users', UserController::class);
+    // Route::put('/profile/{profile}', [ProfileController::class, 'update']);
+    // Route::apiResource('/users', UserController::class);
     Route::apiResource('/profile', ProfileController::class);
 });
 

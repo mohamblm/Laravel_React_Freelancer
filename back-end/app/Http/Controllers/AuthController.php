@@ -39,7 +39,8 @@ class AuthController extends Controller
         }
 
         /** @var \App\Models\User $user */
-        $user = Auth::user();
+        $user = Auth::user()->load('profile');
+        // $user = Auth::user();
         $token = $user->createToken('main')->plainTextToken;
         return response(compact('user', 'token'));
         // return ['message'=>'naddi'];

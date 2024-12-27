@@ -29,10 +29,10 @@ const ModalSignup = ({ show, onClose,toggle }) => {
         dispatch({ type: 'LOADING' });
         axios.post('/singup', credentials)
             .then((res) => {
-                dispatch({ type: 'SIGNUP_SUCCESS', payload: res.data });
-                localStorage.setItem('ACCESS_TOKEN', res.data.token);
-                onClose();
-                
+                dispatch({ type: 'SIGNUP_SUCCESS'});
+                // localStorage.setItem('ACCESS_TOKEN', res.data.token);
+                // onClose();
+                toggle();
             })
             .catch((error) => {
                 const response = error.response;

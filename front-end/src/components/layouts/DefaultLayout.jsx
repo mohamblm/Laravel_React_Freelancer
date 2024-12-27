@@ -3,10 +3,10 @@ import { Outlet, Link, Navigate } from 'react-router-dom';
 import {useSelector} from 'react-redux';
 
 export default function DefaultLayout() {
-    // const {token}=useSelector(state=>state.auth)
-    // if(!token){
-    //    return <Navigate to={'/'} />
-    // }
+    const {token}=useSelector(state=>state.auth)
+    if(!token){
+       return <Navigate to={'/index'} />
+    }
     return (
         <div>
             <Outlet /> 

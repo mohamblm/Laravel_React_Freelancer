@@ -16,7 +16,7 @@ export default function Home() {
     if(!user && token){
       axiosClient.get('/user')
       .then((res)=>{
-        console.log(res.data)
+        console.log(res.data,token)
         dispatch({type:'GET_USER', payload:res.data})
       })
       .catch((err)=>{

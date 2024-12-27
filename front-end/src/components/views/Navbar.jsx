@@ -14,6 +14,7 @@ export default function Navbar() {
     const [icon, setIcon] = useState(false);
     const [isModalSignupOpen, setModalSignupOpen] = useState(false);
     const [isModalLoginOpen, setModalLoginOpen] = useState(false);
+    const navigate=useNavigate();
     
     const OpenModalLogin = () => setModalLoginOpen(true);
     const CloseModalLogin = () => setModalLoginOpen(false);
@@ -52,7 +53,7 @@ export default function Navbar() {
                 localStorage.removeItem('ACCESS_TOKEN');
                 dispatch({ type: 'LOGOUT_SUCCESS' });
                 // window.location.reload('/');
-                // useNavigate('/')
+                navigate('/index');
             })
             .catch((error) => {
                 const response = error.response;
@@ -67,20 +68,20 @@ export default function Navbar() {
     return (
         <div>
             <nav className="navbar">
-                <div className="logo">Freelancer</div>
-                <div className="menu-icon" onClick={toggleicon}>☰</div>
-                <div className={icon ? 'links active' : 'links'}>
+                <div className="logo"><a href="/index">Freelancer</a></div>
+                {/* <div className="menu-icon" onClick={toggleicon}>☰</div> */}
+                <div className={icon ? 'menu active' : 'menu'}>
                     {token == null ? <div><a onClick={OpenModalLogin} >Login</a>
                         <a  onClick={OpenModalSignup} >Signup</a></div> :
                         <div className='profile'>
-                            <img className="rounded-circle mb-1 avatar" src="/assets/profileImage.png" alt="" />
+                            <img className="rounded-circle mb-1 avatar" src={user?.profile ?`http://127.0.0.1:8000/storage/${user.profile.avatar }` : "https://via.placeholder.com/150"} alt="" />
                             
                             <ul className='dis_profile'>
-                                <li><Link to={'/profile'}>Profile</Link></li>
-                                <li>Settings</li>
-                                <li>Become a saller</li>
+                                <li><Link to={'/profile'} className="link">Profile</Link></li>
+                                <li><Link to={'/profile'} className="link">Settings</Link></li>
+                                <li><Link to={'/profile'} className="link">Become a saller</Link></li>
                                 <div />
-                                <li onClick={logout} >Logout</li>
+                                <li onClick={logout} ><Link to={'/profile'} className="link">Logout</Link></li>
                             </ul>
                             <div className='triangle' />
                         </div>

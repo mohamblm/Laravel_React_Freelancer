@@ -25,7 +25,7 @@ class UpdateProfileRequest extends FormRequest
             'state' => 'nullable|string|max:255',
             'postal_code' => 'nullable|string|max:20',
             'country' => 'nullable|string|max:255',
-            'avatar' => 'nullable|url|max:255',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg',
             'date_of_birth' => 'nullable|date|before:today',
             'bio' => 'nullable|string|max:1000',
         ];
