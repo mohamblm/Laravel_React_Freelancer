@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axiosClient from '../../../api/axios';
 import profileImage from '../../../assets/profileImage.png';
 import './ShowService.css';
@@ -9,24 +9,10 @@ import './ShowService.css';
 
 export default function ShowService() {
   const dispatch = useDispatch();
+  const navigate=useNavigate();
   const { errors, service } = useSelector(state => state.servicesReducer);
   const { id } = useParams();
-  const fiverrCardData = {
-    profileImage: "https://via.placeholder.com/100",
-    title: "I will fix your HTML, CSS, WordPress, PHP, ASP bugs",
-    name: "Catherine Yap",
-    rating: "5.0",
-    reviews: "235",
-    location: "Malaysia",
-    languages: "English, Chinese, Malay",
-    description:
-      "Hi, I'm Catherine. I've 10 years of experience with WordPress, CSS, PHP, ASP, JavaScript, HTML5. I don't develop full websites; my services focus on bug fixing or minor changes...",
-    readMoreLink: "#",
-    serviceTitle: "Bug Fixing",
-    serviceDescription: "Fixing of errors/bugs present within your webpage",
-    price: "5",
-    deliveryTime: "7-day delivery",
-  }
+
   useEffect(() => {
     axiosClient.get(`/service/${id}`)
       .then((res) => {
@@ -36,7 +22,8 @@ export default function ShowService() {
         console.log(err)
         console.log(err.response.status)
         if (err.response.status == 404) {
-          dispatch({ type: 'FETCH_SERVICE_FAILURE', payload: err.message })
+          // dispatch({ type: 'FETCH_SERVICE_FAILURE', payload: err.message })
+          navigate('notfound')
         }
 
       })

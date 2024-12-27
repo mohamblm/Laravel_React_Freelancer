@@ -7,23 +7,12 @@ export default function Home() {
 
 
   const { services, loading } = useSelector(state => state.servicesReducer)
-  const { user, token } = useSelector(state => state.auth)
+  
   const dispatch = useDispatch();
   // const [services, setServices] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
-  useEffect(()=>{
-    if(!user && token){
-      axiosClient.get('/user')
-      .then((res)=>{
-        console.log(res.data,token)
-        dispatch({type:'GET_USER', payload:res.data})
-      })
-      .catch((err)=>{
-        console.log(err)
-      })
-    }
-  },[])
+  
 
   
 

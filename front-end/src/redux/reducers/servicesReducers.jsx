@@ -16,11 +16,11 @@ export const servicesReducer=(state=inistialState,action)=>{
         case 'FETCH_SERVICE_SUCCESS':
             return {...state, service:action.payload , load:false}
         case 'FETCH_SERVICE_FAILURE':
-            return {...state,errors:action.payload, load:false}
+            return {...state, errors:action.payload, load:false}
         case 'TRUE_LOADING':
-            return {...state,load:action.payload}
+            return {...state, load:action.payload}
         case 'FALSE_LAODING':
-            return {...state,load:action.payload}
+            return {...state, load:action.payload}
         default:
             return state;
     }
