@@ -23,7 +23,7 @@ class SingupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_name' => 'required|string|max:8',
+            'user_name' => 'required|string|max:20',
             'email' => 'required|email|unique:users,email',
             'password' => [
                 'required',

@@ -1,0 +1,102 @@
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  header {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #f0f0f0;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .benefits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .benefit-item {
+    flex: 0 0 calc(33.33% - 20px); /* Adjust for 3 columns */
+    margin-bottom: 20px;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+  }
+  
+  .benefit-item img {
+    max-width: 80px;
+    margin-bottom: 10px;
+  }
+  
+  .categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .category-item {
+    flex: 0 0 calc(33.33% - 20px); /* Adjust for 3 columns */
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .category-item img {
+    width: 100%;
+    height: 150px; /* Adjust height as needed */
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .testimonials {
+    margin-top: 40px;
+  }
+  
+  .testimonial-item {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  footer a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  /* Responsive Adjustments (Optional) */
+  @media (max-width: 768px) {
+    .benefits, .categories {
+      flex-direction: column;
+    }
+  
+    .benefit-item, .category-item {
+      flex: 0 0 100%;
+      margin-bottom: 20px;
+    }
+  }

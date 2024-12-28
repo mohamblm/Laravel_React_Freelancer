@@ -24,10 +24,12 @@
 }
 
 .navbar .menu {
-  display: flex;
-  gap: 1rem;
+  display: none;
+  /* gap: 1rem; */
 }
-
+.navbar  .active {
+  display: block;
+}
 .navbar  a {
   text-decoration: none;
   color: rgb(0, 0, 0);
@@ -58,15 +60,24 @@
   height: 40px;
   border-radius: 50%;
   border: 1px solid var(--primary_color);
+  object-fit:contain;
 }
+/* style={{ width: "100px", height: "100px", objectFit: "cover" }} */
 
 .profile .dis_profile {
-  display: none;
+  /* display: none; */
   list-style: none;
   cursor: pointer;
   width: 200px;
   z-index: 10;
   color: #ffffff;
+  position: absolute;
+  right: 20px;
+  top: 58px;
+  background-color: #440075;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--primary_color);
 }
 
 .profile .dis_profile li {
@@ -97,15 +108,10 @@
 }
 
 .profile .triangle {
-  display: none;
+  /* display: none; */
   width: 10px;
   height: 10px;
   background-color: #440075;
-
-}
-
-.profile:hover .triangle {
-  display: block;
   position: absolute;
   top: 54px;
   right: 46px;
@@ -114,53 +120,19 @@
   border-bottom: none;
   border-left: none;
   z-index: 100;
-
 }
 
-.profile:hover .dis_profile {
+.profile:hover .menu {
   display: block;
-  position: absolute;
-  right: 20px;
-  top: 58px;
-  background-color: #440075;
-  padding: 1rem;
-  border-radius: 10px;
-  border: 1px solid var(--primary_color);
 }
 
+/* .profile:hover .dis_profile {
+  display: block;
+  
+} */
 
 
 
 
 
-@media (max-width: 768px) {
-  /* .navbar {
-      flex-direction: column;
-      align-items: flex-start;
-    } */
 
-  .navbar .menu-icon {
-    display: block;
-    color: #fff;
-  }
-
-  .navbar .links {
-    flex-direction: column;
-    /* position: absolute; */
-    width: 100%;
-    /* right: 0;
-      top: 40px; */
-    gap: 0.5rem;
-    /* background-color: #555; */
-    display: none;
-  }
-
-  .navbar .links.active {
-    display: flex;
-  }
-
-  .navbar .links a {
-    width: 100%;
-    text-align: center;
-  }
-}

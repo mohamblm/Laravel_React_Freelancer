@@ -34,7 +34,7 @@ const ModalLogin = ({ show, onClose,toggle }) => {
                 dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
                 localStorage.setItem('ACCESS_TOKEN', res.data.token);
                 // onClose();
-                navigate('/index')
+                // navigate('/index')
                 onClose();
             })
             .catch((error) => {

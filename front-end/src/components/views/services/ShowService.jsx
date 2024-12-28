@@ -9,7 +9,7 @@ import './ShowService.css';
 
 export default function ShowService() {
   const dispatch = useDispatch();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const { errors, service } = useSelector(state => state.servicesReducer);
   const { id } = useParams();
 
@@ -29,70 +29,52 @@ export default function ShowService() {
       })
   }, []);
   return (<>
-    {/* <div>{service &&
-      <div className='container d-flex m-1 '>
-        <div className='main col-8'>
-          <h1>{service.title}</h1>
-          <div className='d-flex my-2'>
-            <img className='avatar mr-3' src='/assets/profileImage.png' alt="profel" />
-            <div className='mx-4'>
-              <h3> <b>Amin</b> stars (4.9)</h3>
-              <p> 100 order completed</p>
-              <button className='btn btn-success p-1'>contact</button>
+    {service && (
+      <div className="container my-5">
+        <div className="row g-4">
+          {/* Left Section */}
+          <div className="col-lg-8">
+            <div className="card border-0 shadow-sm p-4">
+              <h1 className="mb-4"><b>Service Details</b></h1>
+              <div className="d-flex align-items-center mb-4">
+                <img
+                  src="/assets/profileImage.png"
+                  alt="Service Provider"
+                  className="rounded-circle"
+                  style={{ width: "70px", height: "70px", objectFit: "cover" }}
+                />
+                <div className="ms-3">
+                  <h4 className="mb-0">Catherine Yap</h4>
+                  <p className="text-muted mb-1">Malaysia | 235 Reviews</p>
+                  <small className="text-success">Starts</small>
+                </div>
+              </div>
+              <div
+                className="rounded mb-4"
+                style={{
+                  background: "url('/assets/5.jpg') no-repeat center center",
+                  backgroundSize: "cover",
+                  height: "300px",
+                }}
+              ></div>
+              <h3 className="mb-3"><b>About This Gig</b></h3>
+              <p>
+                {service.description}
+              </p>
+              <ul>
+                <li>Fixing bugs and errors</li>
+                <li>Minor changes and landing page updates</li>
+                <li>Delivery time: 7 days</li>
+              </ul>
             </div>
-            
           </div>
-        </div>
-        <div className='asideBar'>asid bar</div>
-      </div>
-    }</div> */}
-    <div>{errors && 'kaynin'}</div>
-    <div className="container my-3 mx-2">
-      <div className="row">
-        {/* Left Section */}
-        <div className="col-md-8 border-end">
-          <h1 className='mb-3'><b>Service Details</b></h1>
-          <div className="d-flex mb-3">
-            <img
-              src="/assets/profileImage.png"
-              alt="Service Provider"
-              className="rounded-circle mb-1 avatar"
-            />
-            <div className='my-2 mx-3'>
-              <h3>Catherine Yap</h3>
-              <p className="text-muted">Malaysia | 235 Reviews</p>
-              <p>starts</p>
-            </div>
-          </div>
-          <div className='mb-3' style={{ background: "url('/assets/5.jpg') no-repeat center center", backgroundSize: "cover", height: "300px", }}>
-            {/* <img src="/assets/5.jpg" alt=""   /> */}
-          </div>
-          <div>
-            <h3 className='mb-3'><b>About this gig</b></h3 >
-            <p>
-              I will fix your HTML, CSS, WordPress, PHP, or ASP bugs. With 10
-              years of experience, I specialize in resolving issues efficiently
-              and effectively.
-            </p>
-            <ul>
-              <li>Fixing bugs and errors</li>
-              <li>Minor changes and landing page updates</li>
-              <li>Delivery time: 7 days</li>
-            </ul>
-          </div>
-        </div>
 
-
-        {/* Right Section */}
-        <div className="col-md-4 ">
-          <div className="">
-            <div
-              className="card border border-none"
-              style={{ maxWidth: "400px" }}
-            >
+          {/* Right Section */}
+          <div className="col-lg-4">
+            <div className="card border-0 shadow-sm">
               {/* Card Header */}
-              <div className="card-header bg-white ">
-                <h5 className="mb-0">Informations about service</h5>
+              <div className="card-header bg-success text-white">
+                <h5 className="mb-0">Information About Service</h5>
               </div>
 
               {/* Card Body */}
@@ -100,54 +82,54 @@ export default function ShowService() {
                 {/* Ratings */}
                 <div className="d-flex justify-content-between py-2">
                   <span>Reviews</span>
-                  <span className="text-warning">★★★★★(81)</span>
+                  <span className="text-warning">★★★★★ (81)</span>
                 </div>
                 {/* Response Speed */}
                 <div className="d-flex justify-content-between py-2">
-                  <span>Average response speed</span>
+                  <span>Average Response Speed</span>
                   <span>29 min</span>
                 </div>
-
-                {/* Buyers */}
+                {/* Completed Orders */}
                 <div className="d-flex justify-content-between py-2">
-                  <span>Complated Orders</span>
+                  <span>Completed Orders</span>
                   <span>135</span>
                 </div>
-
-                {/* Current Orders */}
+                {/* Queue */}
                 <div className="d-flex justify-content-between py-2">
                   <span>Queue</span>
                   <span>1</span>
                 </div>
-
-                {/* Service Price */}
+                {/* Price */}
                 <div className="d-flex justify-content-between py-2">
                   <span>Price</span>
-                  <span>$5.00</span>
+                  <span>${service.price}</span>
                 </div>
-
                 {/* Delivery Time */}
                 <div className="d-flex justify-content-between py-2">
                   <span>Delivery Time</span>
                   <span>1 Day</span>
                 </div>
-
-                
               </div>
 
               {/* Card Footer */}
-              <div className="card-footer bg-white ">
-                <button className="btn  bg-success w-100">Order Now</button>
+              <div className="card-footer bg-white">
+                <button className="btn btn-success w-100">Order Now</button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <button onClick={() => { window.location.reload('/'); }}>state</button>
 
+        {/* <div className="mt-4 text-center">
+      <button
+        className="btn btn-outline-secondary"
+        onClick={() => window.location.reload()}
+      >
+        Reload Page
+      </button>
+    </div> */}
+      </div>
+    )}
 
   </>
-
   )
 }

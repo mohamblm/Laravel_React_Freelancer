@@ -5,6 +5,7 @@ import Profile from './components/views/Profile/Profile';
 import Home from './components/Home'
 import Page404 from './components/views/Page404'
 import ShowService from './components/views/services/ShowService';
+import BecomeSaller from './components/views/BecomeSaller/Becomesaller'
 // import { Navigate } from 'react-router-dom';
  const route=createBrowserRouter([
     {
@@ -30,14 +31,11 @@ import ShowService from './components/views/services/ShowService';
                     
                 ]
             },
-            // {
-            //     path:'/',
-            //     element:<GuestLayout />,
-            //     children:[
-                    
-                    
-            //     ]
-            // },
+            {
+                path:'/BecomeSaller',
+                element:<BecomeSaller />,
+                
+            },
             
             
         ]
