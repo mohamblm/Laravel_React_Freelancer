@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const BecomeSellerBanner = () => {
     const freelancers = [
@@ -57,12 +58,7 @@ const BecomeSellerBanner = () => {
                 <p className="lead">
                     You bring the skill. We'll make earning easy.
                 </p>
-                <button
-                    className="btn btn-success btn-lg mt-3"
-                    onClick={() => alert('Redirecting to seller registration...')}
-                >
-                    Become a Seller
-                </button>
+                <Link className="btn btn-success btn-lg mt-3" to={'/Personnel_inf'}>Become a Seller</Link>
             </div>
         </div>
         <div className="container text-center my-5">

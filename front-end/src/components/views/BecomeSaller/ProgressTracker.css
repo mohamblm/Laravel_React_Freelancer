@@ -1,0 +1,73 @@
+.progress-tracker {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+  }
+.progress-tracker .d-none{
+    display: none;
+}
+  .steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+  }
+  
+  .step-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ddd;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .step-title {
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .step.active .step-circle {
+    background-color: #28a745; /* Green color for active step */
+  }
+  
+  .step.completed .step-circle {
+    background-color: #6c757d; /* Grey color for completed steps */
+  }
+  
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background-color: #28a745;
+    transition: width 0.3s ease;
+  }
+  
+  .completion-rate {
+    text-align: right;
+    font-size: 14px;
+    margin-top: 5px;
+    color: #666;
+  }
+  

@@ -55,7 +55,7 @@ export default function Navbar() {
                 localStorage.removeItem('ACCESS_TOKEN');
                 dispatch({ type: 'LOGOUT_SUCCESS' });
                 // window.location.reload('/');
-                navigate('/index');
+                navigate('/');
             })
             .catch((error) => {
                 const response = error.response;
@@ -70,20 +70,19 @@ export default function Navbar() {
     return (
         <div>
             <nav className="navbar">
-                <div className="logo"><a href="/index">Freelancer</a></div>
-                {/* <div className="menu-icon" onClick={toggleicon}>☰</div> */}
+                <div className="logo"><a href="/">Freelancer</a></div>
                 <div >
                     {token == null ? <div><a onClick={OpenModalLogin} >Login</a>
                         <a onClick={OpenModalSignup} >Signup</a></div> :
                         <div className='profile'>
-                            <img onClick={toggleicon} className="rounded-circle mb-1 avatar" src={user?.profile ? `http://127.0.0.1:8000/storage/${user.profile.avatar}` : "/assets/profileAvatar.png"} alt="profile" />
+                            <img onClick={toggleicon} className=" avatar" src={user?.profile ? `http://127.0.0.1:8000/storage/${user.profile.avatar}` : "/assets/profileAvatar.png"} alt="profile" />
                             <div className={icon ? 'menu active' : 'menu'}>
                                 <ul className='dis_profile '>
                                     <li><Link to={'/profile'} className="link">Profile</Link></li>
                                     <li><Link to={'/profile'} className="link">Settings</Link></li>
                                     <li><Link to={'/BecomeSaller'} className="link">Become a saller</Link></li>
                                     <div />
-                                    <li onClick={logout} ><Link to={'/profile'} className="link">Logout</Link></li>
+                                    <li onClick={logout} >Logout</li>
                                 </ul>
                                 <div className='triangle' />
                             </div>

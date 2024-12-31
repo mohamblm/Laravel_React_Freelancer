@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: .8rem 2rem;
+  padding: .5rem 2rem;
   background-color: #ffffff;
   color: rgb(0, 0, 0);
   border-bottom:2px solid var(--primary_color) ;
@@ -48,19 +48,19 @@
   border-color: #fff; */
 }
 
-.menu-icon {
+/* .menu-icon {
   display: none;
   font-size: 1.5rem;
   cursor: pointer;
   color: black;
-}
+} */
 
 .profile .avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   border: 1px solid var(--primary_color);
-  object-fit:contain;
+  object-fit:cover;
 }
 /* style={{ width: "100px", height: "100px", objectFit: "cover" }} */
 
@@ -73,7 +73,7 @@
   color: #ffffff;
   position: absolute;
   right: 20px;
-  top: 58px;
+  top: 54px;
   background-color: #440075;
   padding: 1rem;
   border-radius: 10px;
@@ -109,11 +109,11 @@
 
 .profile .triangle {
   /* display: none; */
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   background-color: #440075;
   position: absolute;
-  top: 54px;
+  top: 50px;
   right: 46px;
   rotate: -45deg;
   border: 1px solid var(--primary_color);

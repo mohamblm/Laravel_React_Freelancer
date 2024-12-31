@@ -6,6 +6,10 @@ import Home from './components/Home'
 import Page404 from './components/views/Page404'
 import ShowService from './components/views/services/ShowService';
 import BecomeSaller from './components/views/BecomeSaller/Becomesaller'
+import GuestLayout from './components/layouts/GuestLayout';
+import Personnel_inf from './components/views/BecomeSaller/Personel_Inf'
+import Professional_Info from './components/views/BecomeSaller/Professional_Info';
+import Account_Security from './components/views/BecomeSaller/Account_Security'
 // import { Navigate } from 'react-router-dom';
  const route=createBrowserRouter([
     {
@@ -13,7 +17,7 @@ import BecomeSaller from './components/views/BecomeSaller/Becomesaller'
         element:<MainPage />,
         children:[
             {
-                path:'/index',
+                path:'/',
                 element:<Home />,
             },
             {
@@ -32,8 +36,28 @@ import BecomeSaller from './components/views/BecomeSaller/Becomesaller'
                 ]
             },
             {
-                path:'/BecomeSaller',
-                element:<BecomeSaller />,
+                path:'/',
+                element:<GuestLayout />,
+                children:[
+                    {
+                        path:'/BecomeSaller',
+                        element:<BecomeSaller/>,
+                    },
+                    {
+                        path:'/Personnel_inf',
+                        element:<Personnel_inf/>,
+                    },
+                    {
+                        path:'/Professional_Info',
+                        element:<Professional_Info/>,
+                    },
+                    {
+                        path:'/Account_Security',
+                        element:<Account_Security/>,
+                    },
+                    
+                    
+                ]
                 
             },
             
