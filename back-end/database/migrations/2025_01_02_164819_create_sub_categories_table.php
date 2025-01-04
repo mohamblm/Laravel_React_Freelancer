@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('sub_categories', function (Blueprint $table) {
             $table->id(); // Primary Key
-            $table->string('name'); // Category name
+            $table->string('name'); // Subcategory name
+            $table->unsignedBigInteger('category_id'); // Foreign key to categories table
             $table->timestamps(); // created_at and updated_at
+        
+            // Foreign key constraint
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('sub_categories');
     }
 };

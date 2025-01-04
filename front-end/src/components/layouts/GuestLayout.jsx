@@ -4,7 +4,7 @@ import ProgressTracker from '../views/BecomeSaller/ProgressTracker';
 
 
 export default function GuestLayout() {
-  const steps = ["Personal Info", "Professional Info", "Account Security"];
+  const steps = [{title:"Personal Info",route:'/Personnel_inf'},{title:"Professional Info",route:'/Professional_Info'} , {title:"Account Security",route:'/Account_Security'}];
   const location=useLocation();
   const stepMap = {
     '/BecomeSaller':0,

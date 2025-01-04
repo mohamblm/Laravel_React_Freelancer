@@ -102,7 +102,7 @@ const BecomeSellerBanner = () => {
                 </div>
             </div>
         </div>
-        <div className="full-container text-center my-5 py-4 " style={{  backgroundColor: "#fffffe" }}>
+        <div className="container text-center  py-4 " >
             <h2 className="mb-4">How it works</h2>
             <div className="row">
                 {steps.map((step) => (

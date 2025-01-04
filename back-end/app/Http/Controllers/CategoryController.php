@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\Request;
 
 class CategoryController extends Controller
 {
@@ -13,7 +12,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories=Category::with('subcategories.semicategories')->get();
+        // $categories=Category::all();
+        return response()->json($categories, 200);
     }
 
     /**

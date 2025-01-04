@@ -92,6 +92,7 @@ const UserProfileDashboard = () => {
                     console.log(res.data)
                     dispatch({ type: 'NOTIFICATION', payload: res.data.message })
                     setTimeout(() => { dispatch({ type: 'STOP_NOTIFICATION' }) }, 5000)
+                    navigate('/Professional_Info')
                 })
                 .catch((err) => {
                     console.log(err)

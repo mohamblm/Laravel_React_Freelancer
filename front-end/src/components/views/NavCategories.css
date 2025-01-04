@@ -1,0 +1,135 @@
+/* Top-level navigation bar */
+.navbarC {
+    display: flex;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    /* padding: 10px 0; */
+    font-family: Arial, sans-serif;
+    justify-content: space-between;
+    /* height: 100%; */
+    width: 100%; /* Match the screen width */
+  /* overflow: hidden; Hide any overflowing content */
+  box-sizing: border-box;
+ 
+}
+.containeLink{
+    display: flex;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    /* padding: 10px 0; */
+    font-family: Arial, sans-serif;
+    justify-content: flex-start;
+    width: 200%; /* Example: Double the screen width */
+    height: 100%;
+  box-sizing: border-box;
+}
+
+/* Navigation links */
+.navLinkC {
+    position: relative;
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(86, 69, 69);
+    text-decoration: none;
+    /* width: max-content; */
+    cursor: pointer;
+    padding: 10px 5px;
+    /* white-space: wrap; */
+    /* border: 1px solid rgb(137, 137, 137); */
+}
+
+.navLinkC:hover {
+    color: #1a73e8;
+}
+
+/* Dropdown container */
+.dropdownMenu {
+    display: none;
+    background-color: rgb(216, 216, 216);
+    border: 1px solid rgb(195, 195, 195);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 10;
+    width: 700px;
+    gap: 20px;
+    flex-wrap: wrap;
+    
+}
+
+/* Show dropdown menu on hover */
+.navLinkC:hover .dropdownMenu {
+    /* display: flex; */
+    display: flex;
+   
+}
+
+/* Category column inside dropdown */
+.categoryColumn {
+    flex: 1;
+    min-width: 150px;
+}
+
+/* Subcategory title */
+.subcategoryTitle {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Semi-category list */
+.semiCategoryList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.semiCategoryItem {
+    margin: 5px 0;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+}
+
+.semiCategoryItem:hover {
+    color: #1a73e8;
+}
+
+/* "New" label */
+.newLabel {
+    background-color: #ff69b4;
+    color: #fff;
+    font-size: 10px;
+    margin-left: 5px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.goLeft{
+    padding: 10px;
+    position: absolute;
+    left: 0;
+    top: auto;
+    color: transparent;
+    z-index: 99;
+    cursor: pointer;
+}
+.goLeft:hover{
+    color:black;
+    background-color: rgba(228, 228, 228, 0.829);
+}
+.goRight{
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    top: auto;
+    color: transparent;
+    cursor: pointer;
+    
+}
+.goRight:hover{
+    color:black;
+    background-color: rgba(228, 228, 228, 0.829);
+
+}

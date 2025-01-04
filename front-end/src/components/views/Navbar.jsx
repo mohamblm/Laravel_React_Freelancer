@@ -11,7 +11,7 @@ import ModalSignup from './Signup';
 export default function Navbar() {
     const { user, token, error } = useSelector(state => state.auth);
     const dispatch = useDispatch();
-    const [icon, setIcon] = useState(false);
+    const [Dropdown, setDropdown] = useState(false);
     const [isModalSignupOpen, setModalSignupOpen] = useState(false);
     const [isModalLoginOpen, setModalLoginOpen] = useState(false);
     const navigate = useNavigate();
@@ -22,21 +22,18 @@ export default function Navbar() {
     const OpenModalSignup = () => setModalSignupOpen(true);
     const CloseModalSignup = () => setModalSignupOpen(false);
 
-    const toggleicon = () => {
+    const toggleDropdown = () => {
         console.log('clicked')
-        if (icon) {
-            setIcon(false)
+        if (Dropdown) {
+            setDropdown(false)
         } else {
-            setIcon(true)
+            setDropdown(true)
         }
     }
-    const test = () => {
-        axios.get('/users')
-            .then((response) => { console.log(response.data) })
-            .catch((error) => { console.log(error) })
-    }
+    const handleMouseLeave = () => {
+        setDropdown(false);
+      };
     const toggle = () => {
-
         if (isModalSignupOpen) {
             CloseModalSignup();
             OpenModalLogin();
@@ -45,7 +42,6 @@ export default function Navbar() {
             OpenModalSignup();
         }
     }
-
 
     const logout = async (e) => {
         e.preventDefault()
@@ -75,8 +71,8 @@ export default function Navbar() {
                     {token == null ? <div><a onClick={OpenModalLogin} >Login</a>
                         <a onClick={OpenModalSignup} >Signup</a></div> :
                         <div className='profile'>
-                            <img onClick={toggleicon} className=" avatar" src={user?.profile ? `http://127.0.0.1:8000/storage/${user.profile.avatar}` : "/assets/profileAvatar.png"} alt="profile" />
-                            <div className={icon ? 'menu active' : 'menu'}>
+                            <img onClick={toggleDropdown} className=" avatar" src={user?.profile ? `http://127.0.0.1:8000/storage/${user.profile.avatar}` : "/assets/profileAvatar.png"} alt="profile" />
+                            <div className={Dropdown ? 'menu active' : 'menu'} onMouseLeave={handleMouseLeave}>
                                 <ul className='dis_profile '>
                                     <li><Link to={'/profile'} className="link">Profile</Link></li>
                                     <li><Link to={'/profile'} className="link">Settings</Link></li>

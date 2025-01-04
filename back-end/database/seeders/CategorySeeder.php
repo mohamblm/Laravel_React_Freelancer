@@ -17,16 +17,17 @@ class CategorySeeder extends Seeder
     public function run()
     {
         $categories = [
-            [ 'name' => 'Web Development'],
-            [ 'name' => 'Mobile App Development'],
-            [ 'name' => 'UI/UX Design'],
-            [ 'name' => 'Digital Marketing'],
-            [ 'name' => 'SEO Services'],
-            [ 'name' => 'Content Writing'],
-            [ 'name' => 'Graphic Design'],
-            [ 'name' => 'Video Editing'],
-            [ 'name' => 'E-commerce Development'],
-            [ 'name' => 'Data Analysis & Visualization'],
+            ['name' => 'Digital Marketing'],
+            ['name' => 'Graphics & Design'],
+            ['name' => 'Writing & Translation'],
+            ['name' => 'Business'],
+            ['name' => 'Programming & Tech'],
+            ['name' => 'Music & Audio'],
+            ['name' => 'Video & Animation'],
+            ['name' => 'Finance'],
+            ['name' => 'AI Services'],
+            ['name' => 'Personal Growth'],
+            ['name'=> 'Consulting']
         ];
 
         DB::table('categories')->insert($categories);

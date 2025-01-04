@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\SubCategory;
 
 class Category extends Model
 {
@@ -23,8 +24,12 @@ class Category extends Model
     /**
      * Get the services associated with the category.
      */
-    public function services()
+    // public function services()
+    // {
+    //     return $this->hasMany(Service::class);
+    // }
+    public function subcategories()
     {
-        return $this->hasMany(Service::class);
+        return $this->hasMany(SubCategory::class);
     }
 }

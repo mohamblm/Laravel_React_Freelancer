@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -31,6 +32,6 @@ Route::middleware('auth:sanctum')->group(function () {
 route::post('/login',[AuthController::class,'login']);
 route::post('/singup',[AuthController::class,'singup']);
 
-
+Route::get('categories',[CategoryController::class,'index']);
 Route::get('/services',[ServiceController::class,'index']);
 Route::get('/service/{id}',[ServiceController::class,'show']);
