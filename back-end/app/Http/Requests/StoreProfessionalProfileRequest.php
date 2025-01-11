@@ -11,7 +11,7 @@ class StoreProfessionalProfileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class StoreProfessionalProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id'=>'required',
+            'occupation'=>'json',
+            'skills'=>'required',
+            'education'=>'nullable',
+            'certification'=>'nullable',
+            'website_url'=>'nullable|url'
         ];
     }
+
 }
+

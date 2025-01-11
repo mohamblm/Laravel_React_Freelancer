@@ -10,6 +10,8 @@ import GuestLayout from './components/layouts/GuestLayout';
 import Personnel_inf from './components/views/BecomeSaller/Personel_Inf'
 import Professional_Info from './components/views/BecomeSaller/Professional_Info';
 import Account_Security from './components/views/BecomeSaller/Account_Security'
+import Dashboard from './components/views/Profile/Dashboard'
+import Gigs from './components/views/Profile/dashboardComponent/Gigs';
 // import { Navigate } from 'react-router-dom';
  const route=createBrowserRouter([
     {
@@ -32,6 +34,24 @@ import Account_Security from './components/views/BecomeSaller/Account_Security'
                         path:'/profile',
                         element:<Profile/>,
                     },
+                    {
+                        path:'/dashboard',
+                        element:<Dashboard/>,
+                        children:[
+                            {
+                                path:'Gigs',
+                                element:<Gigs />
+                            },
+                            {
+                                path:'Orders',
+                                element:'Orders'
+                            },
+                            {
+                                path:'Earnings',
+                                element:'Earnings'
+                            }
+                        ]
+                    }
                     
                 ]
             },
@@ -54,9 +74,7 @@ import Account_Security from './components/views/BecomeSaller/Account_Security'
                     {
                         path:'/Account_Security',
                         element:<Account_Security/>,
-                    },
-                    
-                    
+                    },  
                 ]
                 
             },

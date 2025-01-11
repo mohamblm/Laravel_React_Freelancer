@@ -4,11 +4,11 @@
   box-sizing: border-box;
 } */
 :root{
-  --primary_color:rgb(158, 0, 244);
+  --primary_color:#9e00f4;
 }
 
 
-.navbar {
+.navbarS {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,19 +18,19 @@
   border-bottom:2px solid var(--primary_color) ;
 }
 
-.navbar .logo {
+.navbarS .logo {
   font-size: 1.5rem;
   font-weight: bold;
 }
 
-.navbar .menu {
+.navbarS .menu {
   display: none;
   /* gap: 1rem; */
 }
-.navbar  .active {
+.navbarS  .active {
   display: block;
 }
-.navbar  a {
+.navbarS  a {
   text-decoration: none;
   color: rgb(0, 0, 0);
   padding: 0.5rem 1rem 0.5rem 0;
@@ -41,7 +41,7 @@
   cursor: pointer;
 }
 
-.navbar .links a:hover {
+.navbarS .links a:hover {
 
   color: var(--primary_color);
   /* background-color: rgb(158, 0, 244);

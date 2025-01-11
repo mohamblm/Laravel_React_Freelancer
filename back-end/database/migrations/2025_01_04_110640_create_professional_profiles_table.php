@@ -16,11 +16,11 @@ class CreateProfessionalProfilesTable extends Migration
         Schema::create('professional_profiles', function (Blueprint $table) {
             $table->id(); // Primary Key
             $table->unsignedBigInteger('user_id'); // Foreign Key
-            $table->string('job_title', 255);
-            $table->integer('years_of_experience')->default(0);
+            $table->json('occupation')->nullable();// Store occupation as JSON
             $table->json('skills')->nullable(); // Store skills as JSON
-            $table->string('linkedin_url')->nullable();
-            $table->string('portfolio_url')->nullable();
+            $table->json('education')->nullable();
+            $table->json('certification')->nullable();
+            $table->string('website_url')->nullable();
             $table->timestamps();
 
             // Define the foreign key constraint

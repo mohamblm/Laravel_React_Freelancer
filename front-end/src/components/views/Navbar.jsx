@@ -65,7 +65,7 @@ export default function Navbar() {
 
     return (
         <div>
-            <nav className="navbar">
+            <nav className="navbarS">
                 <div className="logo"><a href="/">Freelancer</a></div>
                 <div >
                     {token == null ? <div><a onClick={OpenModalLogin} >Login</a>
@@ -75,7 +75,7 @@ export default function Navbar() {
                             <div className={Dropdown ? 'menu active' : 'menu'} onMouseLeave={handleMouseLeave}>
                                 <ul className='dis_profile '>
                                     <li><Link to={'/profile'} className="link">Profile</Link></li>
-                                    <li><Link to={'/profile'} className="link">Settings</Link></li>
+                                    <li><Link to={'/DefaultLayout/profile'} className="link">Settings</Link></li>
                                     <li><Link to={'/BecomeSaller'} className="link">Become a saller</Link></li>
                                     <div />
                                     <li onClick={logout} >Logout</li>
