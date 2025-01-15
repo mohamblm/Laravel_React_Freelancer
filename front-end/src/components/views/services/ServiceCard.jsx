@@ -1,6 +1,6 @@
 import React from "react";
 
-const ServiceCard = ({ title, description, price, imageUrl, status }) => {
+const ServiceCard = ({ title, price, imageUrl, status }) => {
   return (
     <div className="card shadow-none border-0  p-0" style={{ width: "18rem",backgroundColor:'#f6f6f6' }}>
       <img
@@ -22,7 +22,7 @@ const ServiceCard = ({ title, description, price, imageUrl, status }) => {
           <div className="text-warning">★★★★★</div>
         </div>
         {/* <h5 className="card-title fw-bold">{title}</h5> */}
-        <p className="card-text text-truncate mb-1">{description}</p>
+        <p className="card-text text-truncate mb-1">{title}</p>
         <div className="d-flex justify-content-between align-items-center">
           <span className="text-success fw-bold">${price}</span>
           <span

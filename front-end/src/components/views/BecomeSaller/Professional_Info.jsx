@@ -11,28 +11,36 @@ const UserProfileDashboard = () => {
   const { user} = useSelector((state) => state.auth);
 
   // useState for controller the errors
-  const [Errors, setErrors] = useState({ occupation1: { occupation_err: false, yearsFrom_err: false, yearsTo_err: false, occ_skills_err: false }, skills_err: false })
+  const [Errors, setErrors] = useState(
+    { occupation1: 
+      { occupation_err: false, yearsFrom_err: false, yearsTo_err: false, occ_skills_err: false }, 
+        skills_err: false 
+    })
 
 
   //---------------------------------------------------------------------------------------
   //----> section of occupation
-  const [categories, setCategories] = useState([]);
+
   const [Occupations, setOccupations] = useState([
     { occupation: "", yearsFrom: "", yearsTo: "", skills: [] },
   ]);
-  // Fetch categories
+  // // Fetch categories
+  const {categories}=useSelector(state=>state.categories);
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data } = await axiosClient.get("categories");
-        setCategories(data);
-      } catch (err) {
-        console.error("Failed to fetch categories:", err);
-      }
-    };
-
-    fetchCategories();
+    if(categories.length===0){
+      const fetchCategories = async () => {
+        await axiosClient.get('categories')
+            .then((res) => {
+                dispatch({type:'FETCH_CATEGORIES_SUCCESS',payload:res.data})    
+            })
+            .catch((err) => { console.log(err) })
+      };
+  
+      fetchCategories();
+    }
   }, []);
+
+
 
   // Add a new occupation entry
   const addOccupation = () => {

@@ -23,6 +23,7 @@ export default function Home() {
       .then((response) => {
         dispatch({ type: 'FETCH_SERVICES_SUCCESS', payload: response.data.data })
         // console.log(response.data.data)
+        // response.data.data.map((service)=>{console.log(JSON.parse(service.image_url)[0])})
         // setServices(response.data.data);
         setCurrentPage(response.data.current_page);
         setLastPage(response.data.last_page);
@@ -54,9 +55,8 @@ export default function Home() {
         <Link style={{ textDecoration: 'none' }} key={i} to={`/service/${service.id}`}>
           <ServiceCard key={i}
             title={service.title}
-            description={service.description}
             price={service.price}
-            imageUrl={'/assets/5.jpg'}
+            imageUrl={`http://127.0.0.1:8000/storage/${JSON.parse(service.image_url)[0]}`}
             status={service.status}
           />
         </Link>

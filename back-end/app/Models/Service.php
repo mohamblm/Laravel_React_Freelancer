@@ -18,6 +18,8 @@ class Service extends Model
     protected $fillable = [
         'user_id',
         'category_id',
+        'subcategory_id',
+        'semicategory_id',
         'title',
         'description',
         'price',

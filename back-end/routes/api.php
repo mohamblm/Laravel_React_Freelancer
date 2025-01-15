@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::apiResource('/users', UserController::class);
     Route::apiResource('/profile', ProfileController::class);
     Route::post('/professionalInformations',[professionalProfileController::class,'store']);
+    Route::post('/service',[ServiceController::class,'store']);
 });
 
 

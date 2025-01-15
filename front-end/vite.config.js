@@ -7,4 +7,11 @@ export default defineConfig({
   server: {
     port: 3000, // Replace 3001 with your desired port
   },
+  resolve: {
+    alias: {
+      '@lexical/react': '@lexical/react/index.js', // Explicitly specify the entry point
+    },
+  },
 })
+
+

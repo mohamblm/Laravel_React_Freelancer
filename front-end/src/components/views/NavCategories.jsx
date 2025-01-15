@@ -1,21 +1,29 @@
 import { useEffect, useState, useRef } from "react";
 import axiosClient from "../../api/axios";
 import "./NavCategories.css"; // Import the CSS file
+import { useDispatch,useSelector } from "react-redux";
 
 const NavCategories = () => {
-    const [categories, setCategories] = useState([]);
+    // const [categories, setCategories] = useState([]);
+    const {categories}=useSelector(state=>state.categories)
+    const dispatch=useDispatch();
 
     async function getCategories() {
         await axiosClient.get('categories')
             .then((res) => {
-                console.log(res.data);
-                setCategories(res.data);
+                // console.log(res.data);
+                // setCategories(res.data);
+                dispatch({type:'FETCH_CATEGORIES_SUCCESS',payload:res.data})
+                
             })
             .catch((err) => { console.log(err) })
+          
+
     }
     // Fetch categories and subcategories
     useEffect(() => {
         getCategories();
+        console.log(categories);
     }, []);
     // const buttonRef = useRef(null);
     const [dropdownStyle, setDropdownStyle] = useState({});
@@ -48,8 +56,8 @@ const NavCategories = () => {
     };
     return (
         <>
-
-            <div className="navbarC">
+            {/* <button onClick={()=>{console.log(categories)}} >ok</button> */}
+            <div className="navbarC" >
                 {/* <div className="containeLink"> */}
                     <div className="goLeft"> &lt;</div>
                     {categories.map((category) => (

@@ -2,42 +2,53 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
-use Illuminate\Support\Facades\DB; // Add this line to import the DB facade
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class ServiceSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Ensure you have at least 1 user and 1 category in your database
-        $userIds = DB::table('users')->pluck('id')->toArray();
-        $categoryIds = DB::table('categories')->pluck('id')->toArray();
+        $services = [
+            [
+                'user_id' => 1,
+                'category_id' => 1,
+                'subcategory_id' => 1,
+                'semicategory_id' => 1,
+                'title' => 'Professional Logo Design',
+                'description' => 'Create a professional logo tailored to your brand identity.',
+                'price' => 50.00,
+                'status' => 'active',
+                'image_url' => json_encode(['https://example.com/logo1.jpg']),
+            ],
+            [
+                'user_id' => 2,
+                'category_id' => 2,
+                'subcategory_id' => 3,
+                'semicategory_id' => 5,
+                'title' => 'Website Development',
+                'description' => 'Build a fully responsive website for your business or personal use.',
+                'price' => 300.00,
+                'status' => 'active',
+                'image_url' => json_encode(['https://example.com/webdev1.jpg']),
+            ],
+            // Add 18 more services below
+        ];
 
-        if (empty($userIds) || empty($categoryIds)) {
-            $this->command->error('You need at least one user and one category to seed services.');
-            return;
+        for ($i = 3; $i <= 20; $i++) {
+            $services[] = [
+                'user_id' => rand(1, 10),
+                'category_id' => rand(1, 5),
+                'subcategory_id' => rand(1, 10),
+                'semicategory_id' => rand(1, 15),
+                'title' => 'Service Title ' . $i,
+                'description' => 'Description for service ' . $i,
+                'price' => rand(10, 500),
+                'status' => ['active', 'paused', 'denied', 'draft'][array_rand(['active', 'paused', 'denied', 'draft'])],
+                'image_url' => json_encode(['https://example.com/image' . $i . '.jpg']),
+            ];
         }
 
-        $statuses = ['active', 'inactive'];
-
-        for ($i = 1; $i <= 20; $i++) {
-            DB::table('services')->insert([
-                'user_id' => $userIds[array_rand($userIds)],
-                'category_id' => $categoryIds[array_rand($categoryIds)],
-                'title' => 'Service ' . $i,
-                'description' => 'This is a detailed description for service ' . $i,
-                'price' => rand(100, 1000), // Random price between 100 and 1000
-                'status' => $statuses[array_rand($statuses)],
-                'image_url' => 'https://via.placeholder.com/150', // Placeholder image
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
+        DB::table('services')->insert($services);
     }
 }
