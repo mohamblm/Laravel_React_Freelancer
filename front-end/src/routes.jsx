@@ -12,7 +12,8 @@ import Professional_Info from './components/views/BecomeSaller/Professional_Info
 import Account_Security from './components/views/BecomeSaller/Account_Security'
 import Dashboard from './components/views/Profile/Dashboard'
 import Gigs from './components/views/Profile/dashboardComponent/Gigs';
-// import { Navigate } from 'react-router-dom';
+import Verify from './components/views/Verify';
+import { Navigate } from 'react-router-dom';
  const route=createBrowserRouter([
     {
         path:'/',
@@ -38,6 +39,10 @@ import Gigs from './components/views/Profile/dashboardComponent/Gigs';
                         path:'/dashboard',
                         element:<Dashboard/>,
                         children:[
+                            {
+                                path: '',
+                                element: <Navigate to="Gigs"/>
+                            },
                             {
                                 path:'Gigs',
                                 element:<Gigs />
@@ -85,6 +90,10 @@ import Gigs from './components/views/Profile/dashboardComponent/Gigs';
     {
         path:'*',
         element:<Page404 />
+    },
+    {
+        path:'/verify',
+        element:<Verify />
     }
 ])
 

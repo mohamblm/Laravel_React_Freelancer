@@ -22,8 +22,10 @@ const NavCategories = () => {
     }
     // Fetch categories and subcategories
     useEffect(() => {
-        getCategories();
-        console.log(categories);
+        if(categories.length===0){
+            getCategories();
+        // console.log(categories);
+        } 
     }, []);
     // const buttonRef = useRef(null);
     const [dropdownStyle, setDropdownStyle] = useState({});
@@ -45,8 +47,6 @@ const NavCategories = () => {
                 left:  -620, // Add scrollX to account for horizontal scrolling
             });
         }
-        
-        console.log(rect.right)
         setActiveCategoryId(categoryId); // Set the currently hovered category
     };
 

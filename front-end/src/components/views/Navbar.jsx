@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './Navbar.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import axios from '../../api/axios';
 import ModalLogin from './Login';
 import ModalSignup from './Signup';
@@ -15,6 +15,7 @@ export default function Navbar() {
     const [isModalSignupOpen, setModalSignupOpen] = useState(false);
     const [isModalLoginOpen, setModalLoginOpen] = useState(false);
     const navigate = useNavigate();
+    const location=useLocation();
 
     const OpenModalLogin = () => setModalLoginOpen(true);
     const CloseModalLogin = () => setModalLoginOpen(false);
@@ -37,6 +38,7 @@ export default function Navbar() {
         if (isModalSignupOpen) {
             CloseModalSignup();
             OpenModalLogin();
+            
         } else if (isModalLoginOpen) {
             CloseModalLogin();
             OpenModalSignup();
@@ -67,7 +69,8 @@ export default function Navbar() {
         <div>
             <nav className="navbarS">
                 <div className="logo"><a href="/">Freelancer</a></div>
-                <div >
+                <div className='d-flex'>
+                { user?.role ==='service_provider' && <Link to={'/dashboard'} className={`link me-2 ${location.pathname.includes('/dashboard') && 'text-success'}`}>DashBoard</Link>}
                     {token == null ? <div><a onClick={OpenModalLogin} >Login</a>
                         <a onClick={OpenModalSignup} >Signup</a></div> :
                         <div className='profile'>
@@ -76,7 +79,7 @@ export default function Navbar() {
                                 <ul className='dis_profile '>
                                     <li><Link to={'/profile'} className="link">Profile</Link></li>
                                     <li><Link to={'/DefaultLayout/profile'} className="link">Settings</Link></li>
-                                    <li><Link to={'/BecomeSaller'} className="link">Become a saller</Link></li>
+                                    {user?.role==='customer' && <li><Link to={'/BecomeSaller'} className="link">Become a saller</Link></li>}
                                     <div />
                                     <li onClick={logout} >Logout</li>
                                 </ul>
@@ -89,7 +92,7 @@ export default function Navbar() {
                     }
                 </div>
 
-                <ModalLogin show={isModalLoginOpen} onClose={CloseModalLogin} toggle={toggle} />
+                <ModalLogin  show={isModalLoginOpen} onClose={CloseModalLogin} toggle={toggle} />
                 <ModalSignup show={isModalSignupOpen} onClose={CloseModalSignup} toggle={toggle} />
             </nav>
         </div>

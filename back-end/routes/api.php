@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         return response()->json($user);
     });
+    Route::put('/user',[AuthController::class, 'update']);
     Route::post('/logout', [AuthController::class, 'logout']);
     // Route::put('/profile/{profile}', [ProfileController::class, 'update']);
     // Route::apiResource('/users', UserController::class);
@@ -38,3 +39,4 @@ route::post('/singup',[AuthController::class,'singup']);
 Route::get('categories',[CategoryController::class,'index']);
 Route::get('/services',[ServiceController::class,'index']);
 Route::get('/service/{id}',[ServiceController::class,'show']);
+Route::post('/verify',[AuthController::class,'verify']);

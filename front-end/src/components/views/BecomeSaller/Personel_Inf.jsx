@@ -22,6 +22,7 @@ const UserProfileDashboard = () => {
     const country = useRef();
     // const avatar = useRef(null);
     const [avatar, setavatar] = useState(null);
+    const [preview, setPreview] = useState(null);
     const bio = useRef();
     const date_of_birth = useRef();
 
@@ -44,8 +45,12 @@ const UserProfileDashboard = () => {
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
-        // avatar.current.value=file;
-        setavatar(file)
+        if (file) {
+            setavatar(file)
+            // Generate a preview URL for the image
+            const previewUrl = URL.createObjectURL(file);
+            setPreview(previewUrl);
+          }
     }
     const saveInf = () => {
         const Profile_INF = new FormData();
@@ -73,7 +78,8 @@ const UserProfileDashboard = () => {
             dispatch({ type: 'LOADING' })
             axiosClient.post(`/profile/${user.profile.id}`, Profile_INF)
                 .then((res) => {
-                    console.log(res.data)
+                    // console.log(res.data.user)
+                    dispatch({type:'GET_USER', payload:res.data.user})
                     dispatch({ type: 'NOTIFICATION', payload: res.data.message })
                     setTimeout(() => { dispatch({ type: 'STOP_NOTIFICATION' }) }, 5000)
                     navigate('/Professional_Info')
@@ -89,7 +95,8 @@ const UserProfileDashboard = () => {
             dispatch({ type: 'LOADING' })
             axiosClient.post(`/profile`, Profile_INF)
                 .then((res) => {
-                    console.log(res.data)
+                    // console.log(res.data)
+                    dispatch({type:'GET_USER', payload:res.data.user})
                     dispatch({ type: 'NOTIFICATION', payload: res.data.message })
                     setTimeout(() => { dispatch({ type: 'STOP_NOTIFICATION' }) }, 5000)
                     navigate('/Professional_Info')
@@ -117,10 +124,10 @@ const UserProfileDashboard = () => {
                                 <div className="row align-items-center">
                                     <div className="col-12 d-flex flex-column justify-content-center align-items-center">
                                         <img
-                                            src={user?.profile ? `http://127.0.0.1:8000/storage/${user.profile.avatar}` : "/assets/profileAvatar.png"}
+                                            src={ preview ?  `${preview}`: (user?.profile && user.profile.avatar!=null) ? `http://127.0.0.1:8000/storage/${user.profile.avatar}` : "/assets/profileAvatar.png"}
                                             alt="User Profile"
                                             className="img-fluid rounded-circle mb-3"
-                                            style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                                            style={{ width: "100px", height: "100px", objectFit: "cover",border: '1px solid #5b08a7'}}
                                         />
                                         <div style={{ width: "100px" }}>
                                             <label

@@ -6,7 +6,9 @@ use App\Models\Profile;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\User ;
+use Illuminate\Support\Facades\Storage;
 class ProfileController extends Controller
 {
     /**
@@ -28,8 +30,8 @@ class ProfileController extends Controller
             $validated['avatar'] = $imagePath; // Update photo path in validated data
         }
         Profile::create($validated);
-
-        return response()->json(['message' => 'Profile created successfully!'], 201);
+        $user=Auth::user()->load('profile');
+        return response()->json(['message' => 'Profile created successfully!','user'=>$user], 201);
     }
 
     /**
@@ -43,18 +45,26 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProfileRequest $request, $profileId)
+    public function update(UpdateProfileRequest $request,User $user, $profileId)
     {
         // return response()->json(['message' => $request->all()], 200);
         $profile = Profile::findOrFail($profileId); // Retrieve the profile being updated
         $validated = $request->validated(); // Get validated data
+        
         if ($request->hasFile('avatar')) {
-            $avatarPath = $request->file('avatar')->store('images', 'public'); //save the profile image in public/images folder
+            // Check if the profile already has an avatar
+            if ($profile->avatar) {
+                // Delete the existing image from storage
+                Storage::disk('public')->delete($profile->avatar);
+            }
+    
+            // Save the new avatar
+            $avatarPath = $request->file('avatar')->store('images', 'public'); // Save the new profile image in public/images folder
             $validated['avatar'] = $avatarPath; // Update photo path in validated data
         }
         $profile->update($validated); // Update the profile with new data
-
-    return response()->json(['message' => 'Profile updated successfully!'], 200);
+        $user=Auth::user()->load('profile');
+    return response()->json(['message' => 'Profile updated successfully!', 'user'=>$user], 200);
     }
 
     /**

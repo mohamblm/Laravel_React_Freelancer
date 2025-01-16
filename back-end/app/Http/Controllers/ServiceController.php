@@ -25,7 +25,7 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        // $service=$request;
+        $service=$request;
         // Validate incoming data
         $validated = $request->validate([
 
@@ -59,7 +59,7 @@ class ServiceController extends Controller
             'status' => 'draft', // Default status
         ]);
 
-        return response()->json(['message' => 'Service created successfully!', 'service' => auth()->id()], 200);
+        return response()->json(['message' => 'Service created successfully!'], 200);
     }
 
     /**

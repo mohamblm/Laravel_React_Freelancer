@@ -6,6 +6,7 @@ const inistialState={
     loading:false,
     error:null,
     notification:null,
+    verifyUrl:null,
 }
 
 export const  authReducer=(state=inistialState,action)=>{
@@ -18,10 +19,9 @@ export const  authReducer=(state=inistialState,action)=>{
         case 'LOGIN_FAILURE':
             return {...state, user:null,token:null, loading:false, error:action.payload};
         case 'SIGNUP_SUCCESS':
-            return {...state, loading:false, error:null};
+            return {...state, verifyUrl:action.payload,loading:false, error:null};
         case 'LOGOUT_SUCCESS':
             return {...state, user:null,token:null, loading:false, error:null};
-        
         case 'SIGNUP_FAILURE':
             return {...state, user:null, loading:false, error:action.payload};
         case 'LOGOUT_FAILURE':

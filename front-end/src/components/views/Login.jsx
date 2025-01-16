@@ -15,7 +15,7 @@ const ModalLogin = ({ show, onClose,toggle }) => {
     const passwordRef = useRef();
     const dispatch = useDispatch();
     const navigate=useNavigate();
-    const { user, token, loading, error } = useSelector(state => state.auth);
+    const {  error,verifyUrl } = useSelector(state => state.auth);
 
     useEffect(() => {
         dispatch({ type: 'REST_ERRORS' })
@@ -33,14 +33,17 @@ const ModalLogin = ({ show, onClose,toggle }) => {
             .then((res) => {
                 dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
                 localStorage.setItem('ACCESS_TOKEN', res.data.token);
-                // onClose();
-                // navigate('/index')
                 onClose();
             })
             .catch((error) => {
                 const response = error.response;
-                if (response && response.status == 422) {
+                if (response && (response.status == 422 ) ) {
                     console.log(response.data.errors)
+                    dispatch({ type: 'LOGIN_FAILURE', payload: response.data.errors })
+                }
+                else if (response && (response.status == 403 ) ) {
+                    console.log(response.data.errors)
+                    dispatch({ type: 'SIGNUP_SUCCESS',payload:response.data.verifyUrl});
                     dispatch({ type: 'LOGIN_FAILURE', payload: response.data.errors })
                 }
             })
@@ -62,7 +65,9 @@ const ModalLogin = ({ show, onClose,toggle }) => {
                         <div className="login-signup-form animated fadeInDown">
                             <div className="form">
                                 <form onSubmit={onSubmit}>
-                                    <h1 className="title">Login into your account</h1>
+                                    {verifyUrl ? <p className='mb-2'>click the link below to verify your email. <br />
+                                    <Link to={verifyUrl} className="text-primary" target="_blank">{verifyUrl}</Link></p>
+                                    :<h1 className="title">Login into your account</h1>}
                                     {error &&
                                         <div className="alert">
                                             {Object.keys(error).map(key => (

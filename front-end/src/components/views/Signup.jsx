@@ -29,12 +29,12 @@ const ModalSignup = ({ show, onClose,toggle }) => {
         dispatch({ type: 'LOADING' });
         axios.post('/singup', credentials)
             .then((res) => {
-                dispatch({ type: 'SIGNUP_SUCCESS'});
-                // localStorage.setItem('ACCESS_TOKEN', res.data.token);
-                // onClose();
+                console.log(res.data)
+                dispatch({ type: 'SIGNUP_SUCCESS',payload:res.data.verifyUrl});
                 toggle();
             })
             .catch((error) => {
+                console.log(error)
                 const response = error.response;
                 if (response && response.status == 422) {
                     console.log(response.data.errors)
@@ -69,8 +69,7 @@ const ModalSignup = ({ show, onClose,toggle }) => {
                                             ))}
                                         </div>
                                     }
-
-                                    <input ref={nameRef} type="text" placeholder="Full Name" />
+                                    <input ref={nameRef} type="text" placeholder="User Name" />
                                     <input ref={emailRef} type="email" placeholder="Email Address" />
                                     <input ref={passwordRef} type="password" placeholder="Password" />
                                     <input ref={passwordConfirmationRef} type="password" placeholder="Repeat Password" />

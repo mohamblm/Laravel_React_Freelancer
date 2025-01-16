@@ -27,7 +27,7 @@ export default function Gigs() {
 
                 {/* Navigation Tabs */}
                 <ul className="nav nav-tabs mt-4">
-                    {['ACTIVE', 'PENDING APPROVAL', 'REQUIRES MODIFICATION', 'DRAFT', 'DENIED', 'PAUSED'].map(
+                    {['ACTIVE', 'DRAFT', 'DENIED', 'PAUSED'].map(
                         (tab) => (
                             <li className="nav-item" key={tab}>
                                 <a
@@ -80,7 +80,7 @@ export default function Gigs() {
                                     <td>
                                         <div className="d-flex align-items-center">
                                             <img
-                                                src="https://via.placeholder.com/50"
+                                                src=""
                                                 alt="Gig Thumbnail"
                                                 className="rounded me-3"
                                             />

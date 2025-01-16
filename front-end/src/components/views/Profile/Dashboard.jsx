@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, Outlet } from 'react-router-dom'
 export default function Dashboard() {
+  
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary bordered border-bottom">

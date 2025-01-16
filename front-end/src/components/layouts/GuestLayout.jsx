@@ -8,10 +8,10 @@ import { Navigate } from 'react-router-dom';
 
 
 export default function GuestLayout() {
-  // const {token}=useSelector(state=>state.auth)
-  //   if(!token){
-  //      return <Navigate to={'/'} />
-    // }
+  const {token}=useSelector(state=>state.auth)
+    if(!token){
+       return <Navigate to={'/'} />
+    }
   const steps = [{title:"Personal Info",route:'/Personnel_inf'},{title:"Professional Info",route:'/Professional_Info'} , {title:"Account Security",route:'/Account_Security'}];
   const location=useLocation();
   const stepMap = {

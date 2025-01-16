@@ -1,10 +1,12 @@
 import {useState} from "react";
 import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
-import {useSelector} from 'react-redux';
-import { Navigate, useNavigate } from "react-router-dom";
+import {useSelector ,useDispatch} from 'react-redux';
+import {useNavigate } from "react-router-dom";
 import PhoneVerificationModal from "./PhoneVerifiedNumber";
+import axiosClient from "../../../api/axios";
 const AccountSecurity = () => {
     const {user}=useSelector(state=>state.auth);
+    const dispatch=useDispatch();
     const navigate=useNavigate();
     // const [showModal, setShowModal] = useState(false);
 
@@ -14,7 +16,21 @@ const AccountSecurity = () => {
     // if(user?.email_verified_at){
     //     navigate('/dashboard')
     // }
-    navigate('/dashboard')
+    const user_role='service_provider';
+    axiosClient.put('user',{user_role:user_role})
+    .then((res)=>{
+      
+      dispatch({type:'GET_USER',payload:res.data.user})
+      dispatch({ type: 'NOTIFICATION', payload: res.data.message })
+      setTimeout(() => { dispatch({ type: 'STOP_NOTIFICATION' }) }, 5000)
+      // console.log(res.data.user)
+      
+      navigate('/dashboard');
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+    
  }
 
 

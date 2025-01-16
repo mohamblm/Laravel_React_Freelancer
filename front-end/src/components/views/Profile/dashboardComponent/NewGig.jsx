@@ -119,7 +119,7 @@ export default function NewGig({ isModalOpen, CloseModal }) {
         else if (formData.semicategory_id === null) {
             setSemiCategoryError("You should select type of your service!")
         }
-        else if (formData.description.length < 15) {
+        else if (formData.description.length < 150) {
             setDescriptionerror(true)
         }
         else if (+formData.price < 5) {
@@ -154,7 +154,7 @@ export default function NewGig({ isModalOpen, CloseModal }) {
             {isModalOpen && (
                 <div className="modal show shadow d-block" tabIndex={-1} role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.8)' }}>
                     <div
-                        className="modal-dialog modal-lg"
+                        className="modal-dialog modal-lg "
                         role="document"
                     >
                         <div className="modal-content">
