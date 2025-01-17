@@ -25,10 +25,13 @@ This guide will walk you through the steps to clone and set up the Laravel & Rea
 ---
 
 ## Step 2: Set Up the Backend (Laravel)
-
+1.Navigate to the `backend` directory:
+   ```bash
+   cd back-end
+   ```
 ### Install Dependencies
-1. Ensure you have [Composer](https://getcomposer.org/) installed on your system.
-2. Run the following command to install Laravel dependencies:
+2. Ensure you have [Composer](https://getcomposer.org/) installed on your system.
+3. Run the following command to install Laravel dependencies:
    ```bash
    composer install
    ```
@@ -70,7 +73,7 @@ The backend should now be running at [http://localhost:8000](http://localhost:80
 1. Ensure you have [Node.js](https://nodejs.org/) and npm (or Yarn) installed on your system.
 2. Navigate to the `frontend` directory:
    ```bash
-   cd frontend
+   cd front-end
    ```
 3. Install the necessary dependencies:
    ```bash
