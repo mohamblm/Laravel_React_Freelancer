@@ -24,9 +24,9 @@ class StoreProfessionalProfileRequest extends FormRequest
         return [
             'user_id'=>'required',
             'occupation'=>'json',
-            'skills'=>'required',
-            'education'=>'nullable',
-            'certification'=>'nullable',
+            'skills'=>'json',
+            'education'=>'nullable|json',
+            'certification'=>'nullable|json',
             'website_url'=>'nullable|url'
         ];
     }

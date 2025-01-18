@@ -11,7 +11,7 @@ class UpdateProfessionalProfileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class UpdateProfessionalProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id'=>'required|exists:professional_profiles,user_id',
+            'occupation'=>'json',
+            'skills'=>'json',
+            'education'=>'nullable|json',
+            'certification'=>'nullable|json',
+            'website_url'=>'nullable|url'
         ];
     }
 }

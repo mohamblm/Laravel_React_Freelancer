@@ -11,7 +11,7 @@ class UpdateServiceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class UpdateServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'status'=>'string',
+            'title' => 'string|max:255',
+            'description' => 'string',
+            'price' => 'numeric|min:0',
+            'category_id' => 'integer|exists:categories,id',
+            'subcategory_id' => 'integer|exists:sub_categories,id',
+            'semicategory_id' => 'integer|exists:semi_categories,id',
+            'images_url' => 'array',
+            'images_url.*' => 'file|mimes:jpeg,png,jpg,gif|max:4048', // Validate each file
         ];
     }
 }

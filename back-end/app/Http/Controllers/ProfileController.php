@@ -30,7 +30,7 @@ class ProfileController extends Controller
             $validated['avatar'] = $imagePath; // Update photo path in validated data
         }
         Profile::create($validated);
-        $user=Auth::user()->load('profile');
+        $user=Auth::user()->load('profile')->load('professionalprofile');
         return response()->json(['message' => 'Profile created successfully!','user'=>$user], 201);
     }
 
@@ -63,7 +63,7 @@ class ProfileController extends Controller
             $validated['avatar'] = $avatarPath; // Update photo path in validated data
         }
         $profile->update($validated); // Update the profile with new data
-        $user=Auth::user()->load('profile');
+        $user=Auth::user()->load('profile')->load('professionalprofile');
     return response()->json(['message' => 'Profile updated successfully!', 'user'=>$user], 200);
     }
 

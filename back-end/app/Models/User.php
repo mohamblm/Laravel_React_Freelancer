@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Service;
 use App\Models\Profile;
+use App\Models\ProfessionalProfile;
 
 class User extends Authenticatable
 {
@@ -51,5 +53,12 @@ class User extends Authenticatable
     public function profile()
     {
         return $this->hasOne(Profile::class);
+    }
+    public function professionalprofile()
+    {
+        return $this->hasOne(ProfessionalProfile::class);
+    }
+    public function services(){
+        return $this->hasMany(Service::class);
     }
 }

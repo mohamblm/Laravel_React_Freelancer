@@ -137,12 +137,12 @@ export default function NewGig({ isModalOpen, CloseModal }) {
             formData.images_url.forEach((image, index) => {
                 data.append(`images_url[${index}]`, image);
             });
-            await axiosClient.post('/service',data)
+            await axiosClient.post('/myservices',data)
             .then((res)=>{
                 // console.log(res.data)
                 dispatch({ type: 'NOTIFICATION', payload: res.data.message })
                 setTimeout(() => { dispatch({ type: 'STOP_NOTIFICATION' }) }, 5000)
-                CloseModal()
+                CloseModal(true)
             })
             .catch((err)=>{
                 console.log(err)
@@ -163,7 +163,7 @@ export default function NewGig({ isModalOpen, CloseModal }) {
                                 <button
                                     type="button"
                                     className="btn-close"
-                                    onClick={CloseModal}
+                                    onClick={()=>{CloseModal(false)}}
                                 />
                             </div>
                             <form onSubmit={handleSubmit}>

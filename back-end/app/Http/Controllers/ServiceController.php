@@ -13,31 +13,23 @@ class ServiceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-    
-        $services = Service::where('status','active')->paginate(4);
-        return response()->json($services);
+
+        $user=$request->user();
+        $services = $user->services;
+        return response()->json(['services'=>$services]);
+        
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(storeServiceRequest $request, Service $service)
     {
         $service=$request;
         // Validate incoming data
-        $validated = $request->validate([
-
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'category_id' => 'required|integer|exists:categories,id',
-            'subcategory_id' => 'required|integer|exists:sub_categories,id',
-            'semicategory_id' => 'required|integer|exists:semi_categories,id',
-            'images_url' => 'required|array',
-            'images_url.*' => 'file|mimes:jpeg,png,jpg,gif|max:4048', // Validate each file
-        ]);
+        $validated = $request->validated();
 
         // Store uploaded images and get their URLs
         $imagePaths = [];
@@ -67,20 +59,21 @@ class ServiceController extends Controller
      */
     public function show(Service $service,$id)
     {
-        try {
-            $service = Service::findOrFail($id);
-            return $service;
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json(['message' => 'Service not found'], 404);
-        }
+        
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateServiceRequest $request, Service $service)
+    public function update(UpdateServiceRequest $request, Service $service,$id)
     {
-        //
+        $service=Service::findOrFail($id);
+        $requestValidated=$request->validated();
+
+        $service->update($requestValidated);
+
+        return response()->json(['message'=>'your update done successfully'], 200);
+
     }
 
     /**
@@ -89,5 +82,21 @@ class ServiceController extends Controller
     public function destroy(Service $service)
     {
         //
+    }
+
+    // get all services 
+    public function getAllServices(){
+        $services = Service::where('status','active')->paginate(10);
+        return response()->json($services);
+    }
+
+    // get one service with its id
+    public function showOneService(Service $service,$id){
+        try {
+            $service = Service::findOrFail($id);
+            return $service;
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['message' => 'Service not found'], 404);
+        }
     }
 }

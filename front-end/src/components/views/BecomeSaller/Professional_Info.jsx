@@ -2,40 +2,86 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axiosClient from "../../../api/axios";
 import { useNavigate } from "react-router-dom";
-import { formToJSON } from "axios";
+
 
 
 const UserProfileDashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user} = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
-  // useState for controller the errors
-  const [Errors, setErrors] = useState(
-    { occupation1: 
-      { occupation_err: false, yearsFrom_err: false, yearsTo_err: false, occ_skills_err: false }, 
-        skills_err: false 
-    })
 
+
+  // // useState for controller backend errors
+  //   const [BackErrors,setBackErrors]=useState();
 
   //---------------------------------------------------------------------------------------
   //----> section of occupation
 
-  const [Occupations, setOccupations] = useState([
-    { occupation: "", yearsFrom: "", yearsTo: "", skills: [] },
-  ]);
-  // // Fetch categories
-  const {categories}=useSelector(state=>state.categories);
+  const [Occupations, setOccupations] = useState([{ occupation: "", yearsFrom: "", yearsTo: "", skills: [] }]);
+  
   useEffect(() => {
-    if(categories.length===0){
+    console.log('useeffect')
+    console.log(user?.professionalprofile ? true:false)
+    if (user?.professionalprofile?.occupation) {
+      console.log('kayn')
+      const occup = JSON.parse(user.professionalprofile.occupation); // Parse the stored JSON data
+      console.log(occup);
+
+      // Directly set the state with the mapped data
+      const updatedOccupations = occup.map((el) => ({
+        occupation: el.occupation || "",
+        yearsFrom: el.yearsFrom || "",
+        yearsTo: el.yearsTo || "",
+        skills: el.skills || []
+      }));
+
+      setOccupations(updatedOccupations); // Update the state with the parsed data
+
+    }
+    if (user?.professionalprofile?.skills) {
+      setSkills(JSON.parse(user.professionalprofile.skills))
+
+    }
+    if (user?.professionalprofile?.education) {
+      setEducation(JSON.parse(user.professionalprofile.education))
+
+    }
+    if (user?.professionalprofile?.certification) {
+      setCertifications(JSON.parse(user.professionalprofile.certification))
+
+    }
+    if (user?.professionalprofile?.website_url) {
+      setWebsite(user.professionalprofile.website_url)
+
+    }
+
+  }, []);
+
+
+
+
+
+  // useState for controller the errors
+  const [Errors, setErrors] = useState(
+    {
+      occupation1:
+        { occupation_err: false, yearsFrom_err: false, yearsTo_err: false, occ_skills_err: false },
+      skills_err: false
+    })
+
+  // // Fetch categories
+  const { categories } = useSelector(state => state.categories);
+  useEffect(() => {
+    if (categories.length === 0) {
       const fetchCategories = async () => {
         await axiosClient.get('categories')
-            .then((res) => {
-                dispatch({type:'FETCH_CATEGORIES_SUCCESS',payload:res.data})    
-            })
-            .catch((err) => { console.log(err) })
+          .then((res) => {
+            dispatch({ type: 'FETCH_CATEGORIES_SUCCESS', payload: res.data })
+          })
+          .catch((err) => { console.log(err) })
       };
-  
+
       fetchCategories();
     }
   }, []);
@@ -143,7 +189,7 @@ const UserProfileDashboard = () => {
     }
   };
   //  delete Education
-  const handleDeletEducation=(index)=>{
+  const handleDeletEducation = (index) => {
     setEducation((prevState) =>
       prevState.filter((_, i) => i !== index))
   }
@@ -156,7 +202,7 @@ const UserProfileDashboard = () => {
     }
   };
   //  delete Certificate
-  const handleDeletCertification=(index)=>{
+  const handleDeletCertification = (index) => {
     setCertifications((prevState) =>
       prevState.filter((_, i) => i !== index))
   }
@@ -195,24 +241,46 @@ const UserProfileDashboard = () => {
     else if (skills.length < 1) {
       setErrors((preErrors) => ({ ...preErrors, skills_err: true }))
     } else {
-      console.log('kolchi nadddddi')
-      const data=new FormData();
-      data.append('user_id',user.id)
-      data.append('occupations',JSON.stringify(Occupations));
-      data.append('skills',JSON.stringify(skills));
-      data.append('education',JSON.stringify(education));
-      data.append('certification',JSON.stringify(certifications));
-      data.append('website_url',website);
-      axiosClient.post('/professionalInformations',data)
-        .then((res) => { 
+
+      const data = new FormData();
+      data.append('user_id', user.id)
+      data.append('occupation', JSON.stringify(Occupations));
+      data.append('skills', JSON.stringify(skills));
+      data.append('education', JSON.stringify(education));
+      data.append('certification', JSON.stringify(certifications));
+      data.append('website_url', website);
+
+      const endpoint = user?.professionalprofile?.id
+      ? `/professionalInformations/${user.professionalprofile.id}`
+      : `/professionalInformations`;
+      const method = user?.professionalprofile?.id ? "PUT" : "POST";
+
+      if (method === "PUT") data.append("_method", "PUT");
+
+      axiosClient.post(endpoint, data)
+        .then((res) => {
           console.log(res.data);
+          dispatch({ type: 'GET_USER', payload: res.data.user })
           dispatch({ type: 'NOTIFICATION', payload: res.data.message })
           setTimeout(() => { dispatch({ type: 'STOP_NOTIFICATION' }) }, 5000)
           navigate('/Account_Security')
-         })
-        .catch((err) => { 
-          console.log(err) 
         })
+        .catch((err) => {
+          console.log(err)
+          if (err.response?.status === 422) {
+            const errs = err.response.data.errors
+            console.log(err.response.data.errors);
+            if (typeof err.response.data.errors === 'object') {
+              alert(Object.keys(errs).map((msg) => {
+                return errs[msg] + '\n'
+
+              }))
+            }
+          }
+
+        })
+      
+
     }
   }
   return (
@@ -226,7 +294,7 @@ const UserProfileDashboard = () => {
               <div className="col-md-4">
                 <label className="form-label">Occupation</label>
                 <select
-                  className={Errors[`occupation${index + 1}`].occupation_err ? "form-select is-invalid" : "form-select"}
+                  className={Errors[`occupation${index + 1}`]?.occupation_err ? "form-select is-invalid" : "form-select"}
                   value={entry.occupation}
                   onChange={(e) =>
                     updateField(index, "occupation", e.target.value)
@@ -243,7 +311,7 @@ const UserProfileDashboard = () => {
               <div className="col-md-3">
                 <label className="form-label">From</label>
                 <select
-                  className={Errors[`occupation${index + 1}`].yearsFrom_err ? "form-select is-invalid" : "form-select"}
+                  className={Errors[`occupation${index + 1}`]?.yearsFrom_err ? "form-select is-invalid" : "form-select"}
                   value={entry.yearsFrom}
                   onChange={(e) =>
                     updateField(index, "yearsFrom", e.target.value)
@@ -263,7 +331,7 @@ const UserProfileDashboard = () => {
               <div className="col-md-3">
                 <label className="form-label">To</label>
                 <select
-                  className={Errors[`occupation${index + 1}`].yearsTo_err ? "form-select is-invalid" : "form-select"}
+                  className={Errors[`occupation${index + 1}`]?.yearsTo_err ? "form-select is-invalid" : "form-select"}
                   value={entry.yearsTo}
                   onChange={(e) =>
                     updateField(index, "yearsTo", e.target.value)
@@ -316,8 +384,8 @@ const UserProfileDashboard = () => {
                       </div>
                     ))}
 
-                  {(Errors[`occupation${index + 1}`].yearsFrom_err || Errors.occupation1.yearsTo_err) && <p className="text-danger"  >Make sure you’ve added your years of experience. </p>}
-                  {Errors[`occupation${index + 1}`].occ_skills_err && <p className="text-danger"  >Make sure you’ve added  1 to 5 of your  skills. </p>}
+                  {(Errors[`occupation${index + 1}`]?.yearsFrom_err || Errors.occupation1?.yearsTo_err) && <p className="text-danger"  >Make sure you’ve added your years of experience. </p>}
+                  {Errors[`occupation${index + 1}`]?.occ_skills_err && <p className="text-danger"  >Make sure you’ve added  1 to 5 of your  skills. </p>}
                 </div>
                 <div>
                   {(index == 0 && Occupations.length < 2) && (
@@ -344,7 +412,7 @@ const UserProfileDashboard = () => {
 
               </>
             )}
-            {(Errors[`occupation${index + 1}`].occupation_err) && <p className="text-danger"  >Make sure you’ve added at least one occupation. </p>}
+            {(Errors[`occupation${index + 1}`]?.occupation_err) && <p className="text-danger"  >Make sure you’ve added at least one occupation. </p>}
             {/* {(index==1 && Errors?.occupation2.occupation_err) && <p className="text-danger"  >Make sure you’ve added at least one occupation. </p>} */}
           </div>
         ))}
@@ -512,7 +580,7 @@ const UserProfileDashboard = () => {
                 <tr key={index}>
                   <td>{edu.major}</td>
                   <td>{edu.year}</td>
-                  <td className="d-flex justify-content-end" onClick={()=>{handleDeletEducation(index)}}><button className="btn bg-danger p-1">Delete</button></td>
+                  <td className="d-flex justify-content-end" onClick={() => { handleDeletEducation(index) }}><button className="btn bg-danger p-1">Delete</button></td>
                 </tr>
               ))}
             </tbody>
@@ -550,7 +618,7 @@ const UserProfileDashboard = () => {
             onChange={(e) =>
               setCertificationForm({ ...certificationForm, year: e.target.value })
             }
-            
+
           />
           <button className="btn bg-secondary m-0 p-2 me-2 " onClick={() => setCertificationForm({ award: "", certifiedFrom: "", year: "" })}>
             Cancel
@@ -574,7 +642,7 @@ const UserProfileDashboard = () => {
                 <tr key={index}>
                   <td>{cert.award}</td>
                   <td>{cert.year}</td>
-                  <td className="d-flex justify-content-end"><button onClick={()=>{handleDeletCertification(index)}} className="btn bg-danger p-1">Delete</button></td>
+                  <td className="d-flex justify-content-end"><button onClick={() => { handleDeletCertification(index) }} className="btn bg-danger p-1">Delete</button></td>
                 </tr>
               ))}
             </tbody>
@@ -590,7 +658,7 @@ const UserProfileDashboard = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Provide a link to your own professional website"
+            placeholder="Ex: https://your_domane_name.com"
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
           />
@@ -602,7 +670,7 @@ const UserProfileDashboard = () => {
       <div className="container d-flex justify-content-end my-4" >
         <button onClick={sendData} className="btn bg-success p-2">Continue</button>
       </div>
-
+      <button onClick={() => { console.log(user) }}>occup</button>
 
 
 

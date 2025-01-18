@@ -17,4 +17,11 @@ class ProfessionalProfile extends Model
         'certification',
         'website_url'
     ];
+    /**
+     * Get the user that owns the profile.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

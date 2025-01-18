@@ -21,12 +21,13 @@ class ProfessionalProfileController extends Controller
      */
     public function store(StoreProfessionalProfileRequest $request)
     {
-        // $occupationsJson = $request->input('occupations'); // Get the JSON data from FormData
-        // $occupations = json_decode($occupationsJson, true); // Decode the JSON into an array
-        $educationjson=$request->input('education');
+    
+        $requestValidated=$request->validated();
+
+        $educationjson=$requestValidated['education'];
         $education=json_decode($educationjson,true);
         
-        $certificationjson=$request->input('certification');
+        $certificationjson=$requestValidated['certification'];
         $certification=json_decode($certificationjson,true);
 
         if(count($education)<1){
@@ -36,15 +37,9 @@ class ProfessionalProfileController extends Controller
             $certificationjson=null;
         }
 
-        ProfessionalProfile::create([
-            'user_id'=>$request['user_id'],
-            'occupation'=>$request->input('occupations'),
-            'skills'=>$request->input('skills'),
-            'education'=>$educationjson,
-            'certification'=>$certificationjson,
-            'website_url'=>$request->input('website_url'),
-        ]);
-        return response()->json(['message' => 'Your Professonal Profile completed successfully!'], 200);
+        ProfessionalProfile::create($requestValidated);
+        $user=$request->user()->load('profile')->load('professionalprofile');
+        return response()->json(['message' => 'Your Professonal Profile completed successfully!','user'=>$user], 200);
     }
 
     /**
@@ -58,9 +53,27 @@ class ProfessionalProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProfessionalProfileRequest $request, ProfessionalProfile $professionalProfile)
+    public function update(UpdateProfessionalProfileRequest $request, ProfessionalProfile $professionalProfile ,$id)
     {
-        //
+        $requestValidated=$request->validated();// check data is it valide
+
+        $professionalProfile=ProfessionalProfile::findOrFail($id); // find the professional profile with id
+
+
+        
+        $education=json_decode($requestValidated['education'],true);// decode jon form to array 
+        if(count($education)<1){ // check if the array empty to make it null . we want stock it with value null 
+            $requestValidated['education']=null;
+        }
+
+        $certification=json_decode($requestValidated['certification'],true);
+        if(count($certification)<1){
+            $requestValidated['certification']=null;
+        }
+
+        $professionalProfile->update($requestValidated);
+        $user=$request->user()->load('profile')->load('professionalprofile'); //get the user with his persional profile and professional profile
+        return response()->json(['message' => 'Your Professonal Profile updated successfully!','user'=>$user], 200);
     }
 
     /**

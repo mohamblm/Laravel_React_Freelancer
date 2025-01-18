@@ -74,6 +74,8 @@ class AuthController extends Controller
         $user->currentAccessToken('main')->delete();
         return ['message'=>'you are logout successfuly'];
     }
+
+    
     public function update(Request $request)
     {
         /** @var \App\Models\User $user */

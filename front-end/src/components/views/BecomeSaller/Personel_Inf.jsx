@@ -1,231 +1,222 @@
-import React from "react";
-import { useRef } from "react";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import axiosClient from "../../../api/axios";
 import { TiPen } from "react-icons/ti";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const UserProfileDashboard = () => {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { user, token } = useSelector(state => state.auth);
+    const { user, token } = useSelector((state) => state.auth);
 
-    const first_name = useRef();
-    const last_name = useRef();
-    const phone = useRef();
-    const address = useRef();
-    const city = useRef();
-    const state = useRef();
-    const postal_code = useRef();
-    const country = useRef();
-    // const avatar = useRef(null);
-    const [avatar, setavatar] = useState(null);
+    const [formData, setFormData] = useState({
+        first_name: "",
+        last_name: "",
+        phone: "",
+        address: "",
+        city: "",
+        state: "",
+        postal_code: "",
+        country: "",
+        date_of_birth: "",
+        bio: "",
+        avatar: null,
+    });
+
     const [preview, setPreview] = useState(null);
-    const bio = useRef();
-    const date_of_birth = useRef();
-
-
-
 
     useEffect(() => {
         if (!user && token) {
-            dispatch({ type: 'LOADING' })
-            axiosClient.get('/user')
+            dispatch({ type: "LOADING" });
+            axiosClient
+                .get("/user")
                 .then((res) => {
-                    console.log(res.data)
-                    dispatch({ type: 'GET_USER', payload: res.data })
+                    dispatch({ type: "GET_USER", payload: res.data });
                 })
-                .catch((err) => {
-                    console.log(err)
-                })
+                .catch((err) => console.error(err));
+        } else if (user?.profile) {
+            setFormData({
+                ...formData,
+                ...user.profile,avatar:null
+            });
+            // setFormData({
+            //     ...formData,
+            //     avatar:null,
+            // });
+            console.log(formData)
         }
-    }, [])
+    }, []);
 
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setavatar(file)
-            // Generate a preview URL for the image
-            const previewUrl = URL.createObjectURL(file);
-            setPreview(previewUrl);
-          }
-    }
-    const saveInf = () => {
-        const Profile_INF = new FormData();
-        Profile_INF.append('user_id', user.id);
-        Profile_INF.append('first_name', first_name.current.value);
-        Profile_INF.append('last_name', last_name.current.value);
-        Profile_INF.append('phone', phone.current.value);
-        Profile_INF.append('address', address.current.value);
-        Profile_INF.append('first_name', first_name.current.value);
-        Profile_INF.append('city', city.current.value);
-        Profile_INF.append('state', state.current.value);
-        Profile_INF.append('postal_code', postal_code.current.value);
-        Profile_INF.append('country', country.current.value);
-        if (avatar) {
-            Profile_INF.append('avatar', avatar);
-        }
-        Profile_INF.append('date_of_birth', date_of_birth.current.value);
-        Profile_INF.append('bio', bio.current.value);
-
-        // for (let pair of Profile_INF.entries()) {
-        //     console.log(pair[0] + ': ' + pair[1]);
-        // }
-        if (user?.profile && user.profile.id) {
-            Profile_INF.append('_method', 'PUT');
-            dispatch({ type: 'LOADING' })
-            axiosClient.post(`/profile/${user.profile.id}`, Profile_INF)
-                .then((res) => {
-                    // console.log(res.data.user)
-                    dispatch({type:'GET_USER', payload:res.data.user})
-                    dispatch({ type: 'NOTIFICATION', payload: res.data.message })
-                    setTimeout(() => { dispatch({ type: 'STOP_NOTIFICATION' }) }, 5000)
-                    navigate('/Professional_Info')
-                })
-                .catch((err) => {
-                    console.log(err)
-                    const response = err.response;
-                    if (response && response.status == 422) {
-                        console.log(response.data.errors)
-                    }
-                })
-        } else {
-            dispatch({ type: 'LOADING' })
-            axiosClient.post(`/profile`, Profile_INF)
-                .then((res) => {
-                    // console.log(res.data)
-                    dispatch({type:'GET_USER', payload:res.data.user})
-                    dispatch({ type: 'NOTIFICATION', payload: res.data.message })
-                    setTimeout(() => { dispatch({ type: 'STOP_NOTIFICATION' }) }, 5000)
-                    navigate('/Professional_Info')
-                })
-                .catch((err) => {
-                    console.log(err)
-                    const response = err.response;
-                    if (response && response.status == 422) {
-                        console.log(response.data.errors)
-                    }
-                })
-        }
-
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    return (<>
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setFormData((prev) => ({ ...prev, avatar: file }));
+            setPreview(URL.createObjectURL(file));
+        }
+    };
 
-        {user && (
-            <div className="">
-                <div className="card shadow-lg border-0">
-                    <div className="row g-0 flex-wrap">
-                        {/* Profile Image */}
-                        <div className="col-lg-4 col-md-12 text-center p-4">
-                            <div className="bordered border-bottom m-0 p-0">
-                                <div className="row align-items-center">
-                                    <div className="col-12 d-flex flex-column justify-content-center align-items-center">
-                                        <img
-                                            src={ preview ?  `${preview}`: (user?.profile && user.profile.avatar!=null) ? `http://127.0.0.1:8000/storage/${user.profile.avatar}` : "/assets/profileAvatar.png"}
-                                            alt="User Profile"
-                                            className="img-fluid rounded-circle mb-3"
-                                            style={{ width: "100px", height: "100px", objectFit: "cover",border: '1px solid #5b08a7'}}
-                                        />
-                                        <div style={{ width: "100px" }}>
-                                            <label
-                                                htmlFor="profileImageInput"
+    const saveInf = useCallback(
+        (e) => {
+            e.preventDefault();
+            const profileData = new FormData();
+            Object.entries(formData).forEach(([key, value]) => {
+                if (value !== null && value !== undefined) {
+                    profileData.append(key, value);
+                }
+            });
+            profileData.append('user_id', user.id)
+            const endpoint = user?.profile?.id
+                ? `/profile/${user.profile.id}`
+                : `/profile`;
+            const method = user?.profile?.id ? "PUT" : "POST";
+
+            if (method === "PUT") profileData.append("_method", "PUT");
+            console.log(endpoint)
+            axiosClient
+                .post(endpoint, profileData)
+                .then((res) => {
+                    dispatch({ type: "GET_USER", payload: res.data.user });
+                    dispatch({ type: "NOTIFICATION", payload: res.data.message });
+                    setTimeout(() => dispatch({ type: "STOP_NOTIFICATION" }), 5000);
+                    navigate("/Professional_Info");
+                })
+                .catch((err) => {
+                    if (err.response?.status === 422) {
+                        const errs = err.response.data.errors
+                        console.log(err.response.data.errors);
+                        if (typeof err.response.data.errors === 'object') {
+                            alert(Object.keys(errs).map((msg) => {
+                                return errs[msg] + '\n'
+
+                            }))
+                        }
+                    }
+                });
+        },
+        [formData, user, dispatch, navigate]
+    );
+
+    return (
+        <>
+            {user && (
+                <form onSubmit={saveInf} className="profile-form">
+                    <div className="card shadow-lg border-0">
+                        <div className="row g-0 flex-wrap">
+                            {/* Profile Image */}
+                            <div className="col-lg-4 col-md-12 text-center p-4">
+                                <div className="bordered border-bottom m-0 p-0">
+                                    <div className="row align-items-center">
+                                        <div className="col-12 d-flex flex-column justify-content-center align-items-center">
+                                            <img
+                                                src={
+                                                    preview ||
+                                                    (user?.profile?.avatar
+                                                        ? `http://127.0.0.1:8000/storage/${user.profile.avatar}`
+                                                        : "/assets/profileAvatar.png")
+                                                }
+                                                alt="User Profile"
+                                                className="img-fluid rounded-circle mb-3"
                                                 style={{
-                                                    cursor: "pointer",
-                                                    color: "blue",
-                                                    textDecoration: "underline",
-                                                    maxWidth: "10ch",
-                                                    overflow: "hidden",
-                                                    whiteSpace: "nowrap",
-                                                    textOverflow: "ellipsis",
+                                                    width: "100px",
+                                                    height: "100px",
+                                                    objectFit: "cover",
+                                                    border: "1px solid #5b08a7",
                                                 }}
-                                            >
-                                                {avatar ? avatar.name : <>Profile<TiPen /></>}
-                                            </label>
-                                            <input
-                                                id="profileImageInput"
-                                                type="file"
-                                                accept="image/*"
-                                                style={{ display: "none" }}
-                                                onChange={handleImageChange}
                                             />
+                                            <div style={{ width: "100px" }}>
+                                                <label
+                                                    htmlFor="profileImageInput"
+                                                    style={{
+                                                        cursor: "pointer",
+                                                        color: "blue",
+                                                        textDecoration: "underline",
+                                                    }}
+                                                >
+                                                    {formData.avatar?.name || <>Profile <TiPen /></>}
+                                                </label>
+                                                <input
+                                                    id="profileImageInput"
+                                                    type="file"
+                                                    accept="image/*"
+                                                    style={{ display: "none" }}
+                                                    onChange={handleImageChange}
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-12 text-center">
-                                        <h1 className="fw-bold">{user.user_name}</h1>
-                                        <p className="text-muted">{user.email}</p>
+                                        <div className="col-12 text-center">
+                                            <h1 className="fw-bold">{user.user_name}</h1>
+                                            <p className="text-muted">{user.email}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        {/* User Information */}
-                        <div className="col-lg-8 col-md-12">
-                            <div className="card-body">
-                                <h5 className="card-title fw-bold">Profile Information</h5>
-                                <ul className="list-unstyled">
-                                    <li>
-                                        <strong>First Name:</strong>{" "}
-                                        <input type="text" ref={first_name} defaultValue={user.profile?.first_name} placeholder="Your First Name" className="form-control" />
-                                    </li>
-                                    <li>
-                                        <strong>Last Name:</strong>{" "}
-                                        <input type="text" ref={last_name} defaultValue={user.profile?.last_name} placeholder="Your Last Name" className="form-control" />
-                                    </li>
-                                    <li>
-                                        <strong>Phone:</strong>{" "}
-                                        <input type="phone" ref={phone} defaultValue={user.profile?.phone} placeholder="Your Phone" className="form-control" />
-                                    </li>
-                                    <li>
-                                        <strong>Date Of Birth:</strong>{" "}
-                                        <input type="text" ref={date_of_birth} defaultValue={user.profile?.date_of_birth} placeholder="YYYY-MM-DD" className="form-control" />
-                                    </li>
-                                    <li>
-                                        <strong>Address:</strong>{" "}
-                                        <input type="text" ref={address} defaultValue={user.profile?.address} placeholder="Your Address" className="form-control" />
-                                    </li>
-                                    <li>
-                                        <strong>City:</strong>{" "}
-                                        <input type="text" ref={city} defaultValue={user.profile?.city} placeholder="Your City" className="form-control" />
-                                    </li>
-                                    <li>
-                                        <strong>State:</strong>{" "}
-                                        <input type="text" ref={state} defaultValue={user.profile?.state} placeholder="Your State" className="form-control" />
-                                    </li>
-                                    <li>
-                                        <strong>Postal Code:</strong>{" "}
-                                        <input type="text" ref={postal_code} defaultValue={user.profile?.postal_code} placeholder="Postal Code" className="form-control" />
-                                    </li>
-                                    <li>
-                                        <strong>Country:</strong>{" "}
-                                        <input type="text" ref={country} defaultValue={user.profile?.country} placeholder="Your Country" className="form-control" />
-                                    </li>
-                                    <li>
-                                        <strong>Bio:</strong>{" "}
-                                        <textarea
-                                            ref={bio}
-                                            defaultValue={user.profile?.bio}
-                                            placeholder="Your Bio"
-                                            className="form-control"
-                                            rows="3"
-                                        ></textarea>
-                                    </li>
-                                </ul>
-                                <div className="mt-4 d-flex flex-wrap gap-3">
-                                    <button className="btn btn-success px-5" onClick={saveInf}>
-                                        Continue
-                                    </button>
+                            {/* User Information */}
+                            <div className="col-lg-8 col-md-12">
+                                <div className="card-body">
+                                    <h5 className="card-title fw-bold">Profile Information</h5>
+                                    <ul className="list-unstyled">
+                                        {[
+                                            "first_name",
+                                            "last_name",
+                                            "phone",
+                                            "date_of_birth",
+                                            "address",
+                                            "city",
+                                            "state",
+                                            "postal_code",
+                                            "country",
+                                        ].map((field) => (
+                                            <li key={field}>
+                                                <strong>
+                                                    {field.replace(/_/g, " ")}:{" "}
+                                                    <span className="text-danger">
+                                                        <sup>*</sup>
+                                                    </span>{" "}
+                                                </strong>
+                                                <input
+                                                    type={"text"}
+                                                    name={field}
+                                                    value={formData[field] || ""}
+                                                    placeholder={`Your ${field.replace(/_/g, " ")}`}
+                                                    onChange={handleInputChange}
+                                                    className="form-control"
+                                                    required
+                                                />
+                                            </li>
+
+                                        ))}
+                                        <li>
+                                            <strong>Bio: <span className="text-danger"> <sup>*</sup> </span> </strong>
+                                            <textarea
+                                                value={formData.bio || ""}
+                                                name="bio"
+                                                placeholder="Your Bio"
+                                                className="form-control"
+                                                onChange={handleInputChange}
+                                                rows="3"
+                                                minLength={150}
+                                                required
+                                            ></textarea>
+                                        </li>
+                                    </ul>
+                                    <div className="mt-4 d-flex flex-wrap gap-3">
+                                        <button type="submit" className="btn btn-success px-5">
+                                            Continue
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        )}
-
-    </>
+                </form>
+            )}
+        </>
     );
 };
 
