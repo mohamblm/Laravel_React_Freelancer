@@ -1,9 +1,11 @@
 import {useEffect} from 'react'
 import { Outlet, Navigate } from 'react-router-dom';
-import Navbar from '../views/Navbar';
+// import Navbar from '../views/Navbar';
+import Header from '../views/Header';
 import { useSelector,useDispatch } from 'react-redux';
 import axiosClient from '../../api/axios';
 import './MainPage.css';
+
 
 export default function () {
   const {loading ,notification}=useSelector(state=>state.auth);
@@ -27,7 +29,8 @@ export default function () {
   return (
     <div>
       <div>
-        <Navbar />
+        {/* // <Navbar /> */}
+        <Header />
       </div>
       <div>
         <Outlet />

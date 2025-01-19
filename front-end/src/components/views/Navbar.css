@@ -10,9 +10,13 @@
 
 .navbarS {
   display: flex;
+  position: fixed;
+  top: 0;
+  z-index: 10000;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: .5rem 2rem;
+  /* padding: .5rem 2rem; */
   background-color: #ffffff;
   color: rgb(0, 0, 0);
   border-bottom:2px solid var(--primary_color) ;
@@ -72,7 +76,7 @@
   z-index: 10;
   color: #ffffff;
   position: absolute;
-  right: 20px;
+  right: 10px;
   top: 54px;
   background-color: #440075;
   padding: 1rem;
@@ -114,7 +118,7 @@
   background-color: #440075;
   position: absolute;
   top: 50px;
-  right: 46px;
+  right: 30px;
   rotate: -45deg;
   border: 1px solid var(--primary_color);
   border-bottom: none;

@@ -50,11 +50,14 @@ export default function ShowService() {
                 </div>
               </div>
               <div
-                className="rounded mb-4"
+                className="rounded mb-4 cover"
                 style={{
-                  background: "url('/assets/5.jpg') no-repeat center center",
-                  backgroundSize: "cover",
+                  
                   height: "300px",
+                  width:"auto",
+                  background: `url('http://127.0.0.1:8000/storage/${JSON.parse(service.image_url)[0]}') no-repeat center center`,
+                  backgroundSize: "cover",
+
                 }}
               ></div>
               <h3 className="mb-3"><b>About This Gig</b></h3>

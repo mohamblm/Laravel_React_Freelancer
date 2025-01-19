@@ -629,7 +629,7 @@ const UserProfileDashboard = () => {
         </div>
         {/* Certification Table */}
         {certifications.length > 0 && (
-          <table className="table table-bordered">
+          <table className="table">
             <thead>
               <tr>
                 <th>Certificate or Award</th>
@@ -670,7 +670,7 @@ const UserProfileDashboard = () => {
       <div className="container d-flex justify-content-end my-4" >
         <button onClick={sendData} className="btn bg-success p-2">Continue</button>
       </div>
-      <button onClick={() => { console.log(user) }}>occup</button>
+      
 
 
 

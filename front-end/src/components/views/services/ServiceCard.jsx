@@ -1,6 +1,6 @@
 import React from "react";
 
-const ServiceCard = ({ title, price, imageUrl, status }) => {
+const ServiceCard = ({ title, price, imageUrl, status, provider }) => {
   return (
     <div className="card shadow-none border-0  p-0" style={{ width: "18rem",backgroundColor:'#f6f6f6' }}>
       <img
@@ -17,7 +17,7 @@ const ServiceCard = ({ title, price, imageUrl, status }) => {
             alt="User Profile"
             className="img-fluid rounded-circle mb-2  "
             style={{ width: "20px", height: "20px", objectFit: "cover" }}
-          /> <h6 className="mx-2">mohamed</h6>
+          /> <h6 className="mx-2">{provider.user_name}</h6>
           </div>
           <div className="text-warning">★★★★★</div>
         </div>

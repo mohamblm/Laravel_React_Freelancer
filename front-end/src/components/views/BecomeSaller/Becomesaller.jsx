@@ -97,7 +97,7 @@ const BecomeSellerBanner = () => {
                             ❤️
                         </span>
                         <h5 className="mt-2 mb-3">What's Your Skill?</h5>
-                        <button className="btn btn-success btn-sm">Become a Seller</button>
+                        <Link className="btn btn-success btn-sm" to={'/Personnel_inf'}>Become a Seller</Link>                  
                     </div>
                 </div>
             </div>

@@ -86,7 +86,7 @@ class ServiceController extends Controller
 
     // get all services 
     public function getAllServices(){
-        $services = Service::where('status','active')->paginate(10);
+        $services = Service::where('status','active')->with('user.profile')->paginate(10);
         return response()->json($services);
     }
 

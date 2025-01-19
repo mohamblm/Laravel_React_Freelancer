@@ -4,6 +4,7 @@ import ServiceCard from './views/services/ServiceCard';
 import axiosClient from '../api/axios';
 import { useEffect, useState } from 'react';
 import NavCategories from './views/NavCategories';
+
 export default function Home() {
 
 
@@ -22,7 +23,7 @@ export default function Home() {
     await axiosClient.get(`/services?page=${page}`)
       .then((response) => {
         dispatch({ type: 'FETCH_SERVICES_SUCCESS', payload: response.data.data })
-        // console.log(response.data.data)
+        console.log(response.data.data)
         // response.data.data.map((service)=>{console.log(JSON.parse(service.image_url)[0])})
         // setServices(response.data.data);
         setCurrentPage(response.data.current_page);
@@ -58,6 +59,7 @@ export default function Home() {
             price={service.price}
             imageUrl={`http://127.0.0.1:8000/storage/${JSON.parse(service.image_url)[0]}`}
             status={service.status}
+            provider={service.user}
           />
         </Link>
       ))}

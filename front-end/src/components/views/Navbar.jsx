@@ -68,7 +68,7 @@ export default function Navbar() {
     return (
         <div>
             <nav className="navbarS">
-                <div className="logo"><a href="/">Freelancer</a></div>
+                <div className="logo"><a href="/"><span className='text-success fw-bold'>G</span>oFreelancer</a></div>
                 <div className='d-flex'>
                 { user?.role ==='service_provider' && <Link to={'/dashboard'} className={`link me-2 ${location.pathname.includes('/dashboard') && 'text-success'}`}>DashBoard</Link>}
                     {token == null ? <div><a onClick={OpenModalLogin} >Login</a>
