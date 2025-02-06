@@ -13,6 +13,7 @@ import Account_Security from './components/views/BecomeSaller/Account_Security'
 import Dashboard from './components/views/Profile/Dashboard'
 import Gigs from './components/views/Profile/dashboardComponent/Gigs';
 import Verify from './components/views/Verify';
+import ShowServices from './components/views/services/ShowServices';
 import { Navigate } from 'react-router-dom';
  const route=createBrowserRouter([
     {
@@ -24,9 +25,14 @@ import { Navigate } from 'react-router-dom';
                 element:<Home />,
             },
             {
+                path:'/services',
+                element:<ShowServices />
+            },
+            {
                 path:'/service/:id',
                 element:<ShowService />
             },
+            
             {
                 path:'/',
                 element:<DefaultLayout />,

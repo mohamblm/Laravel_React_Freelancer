@@ -13,7 +13,7 @@ const ServiceCard = ({ title, price, imageUrl, status, provider }) => {
         <div className="d-flex justify-content-between align-items-center">
           <div className="d-flex">
           <img
-            src={"/assets/profileAvatar.png"}
+            src={provider?.profile?.avatar ? `http://127.0.0.1:8000/storage/${provider?.profile?.avatar}` : "/assets/profileAvatar.png"}
             alt="User Profile"
             className="img-fluid rounded-circle mb-2  "
             style={{ width: "20px", height: "20px", objectFit: "cover" }}

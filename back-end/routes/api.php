@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -8,6 +7,7 @@ use App\Http\Controllers\professionalProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -38,7 +38,9 @@ route::post('/singup',[AuthController::class,'singup']);
 
 Route::get('categories',[CategoryController::class,'index']);
 
-Route::get('/services',[ServiceController::class,'getAllServices']);
+Route::get('/services',[ServiceController::class,'index']);
 Route::get('/service/{id}',[ServiceController::class,'showOneService']);
+
+Route::get('search/fetchSuggestions',[SearchController::class,'fetchSuggestions']);
 
 Route::post('/verify',[AuthController::class,'verify']);

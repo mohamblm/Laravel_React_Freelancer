@@ -1,10 +1,11 @@
 import { useState, useCallback } from 'react';
-import { Search, Menu, User } from 'lucide-react';
+import { Search, Menu, User } from 'lucide-react'; 
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import axios from '../../api/axios';
 import ModalLogin from './Login';
 import ModalSignup from './Signup';
+import SearchBar from './SearchBar';
 import './Navbar.css';
 
 const Header = () => {
@@ -63,7 +64,7 @@ const Header = () => {
                     {/* Search Bar */}
                     <div className="d-none d-md-flex flex-grow-1 mx-4">
                         <div className="position-relative w-100" style={{ maxWidth: '600px' }}>
-                            <input
+                            {/* <input
                                 type="text"
                                 placeholder="Search for any service..."
                                 className="form-control pe-5 m-0"
@@ -73,7 +74,8 @@ const Header = () => {
                                 className="position-absolute top-50 translate-middle-y text-secondary"
                                 style={{ right: '10px', pointerEvents: 'none' }}
                                 size={20}
-                            />
+                            /> */}
+                            <SearchBar/>
                         </div>
                     </div>
 

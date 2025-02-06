@@ -2,11 +2,13 @@ import { useEffect, useState, useRef } from "react";
 import axiosClient from "../../api/axios";
 import "./NavCategories.css"; // Import the CSS file
 import { useDispatch,useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const NavCategories = () => {
     // const [categories, setCategories] = useState([]);
     const {categories}=useSelector(state=>state.categories)
     const dispatch=useDispatch();
+    const navigate=useNavigate();
 
     async function getCategories() {
         await axiosClient.get('categories')
@@ -54,6 +56,16 @@ const NavCategories = () => {
     const handleMouseLeave = () => {
         setActiveCategoryId(null); // Reset active category
     };
+    const handleSemicategoryClick=(id)=>{
+        navigate(`/services?semicategoryId=${id}`);
+    }
+    const handleSubcategoryClick=(id)=>{
+        navigate(`/services?subcategoryId=${id}`);
+    }
+    const handleCategoryClick=(id)=>{
+        navigate(`/services?categoryId=${id}`);
+    }
+
     return (
         <>
             {/* <button onClick={()=>{console.log(categories)}} >ok</button> */}
@@ -66,15 +78,15 @@ const NavCategories = () => {
                             className="navLinkC"
                             
                         >
-                            <div onMouseEnter={(e) => handleHover(e, category.id)}  >{category.name}</div>
+                            <button onMouseEnter={(e) => handleHover(e, category.id)}  className="categoryItem" onClick={()=>handleCategoryClick(category.id)}>{category.name}</button>
                             {activeCategoryId === category.id && (
                                 <div className="dropdownMenu" style={dropdownStyle} >
                                     {category.subcategories.map((subcategory) => (
                                         <div key={subcategory.id} className="categoryColumn">
-                                            <div className="subcategoryTitle">{subcategory.name}</div>
+                                            <button className="subcategoryTitle"  onClick={()=>handleSubcategoryClick(subcategory.id)}>{subcategory.name}</button>
                                             <ul className="semiCategoryList">
                                                 {subcategory.semicategories.map((semi) => (
-                                                    <li key={semi.id} className="semiCategoryItem">
+                                                    <li key={semi.id} className="semiCategoryItem" onClick={()=>handleSemicategoryClick(semi.id)}>
                                                         {semi.name}
                                                     </li>
                                                 ))}

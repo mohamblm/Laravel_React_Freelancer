@@ -1,7 +1,7 @@
 
 
 const inistialState={
-    services:null,
+    services:[],
     service:null,
     load:false,
     errors:null,

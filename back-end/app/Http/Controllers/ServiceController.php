@@ -15,11 +15,39 @@ class ServiceController extends Controller
      */
     public function index(Request $request)
     {
+        $query = $request->input('query');
+        $service = $request->input('service');
+        $semicategory_id = $request->input('semicategoryId');
+        $subcategory_id = $request->input('subcategoryId');
+        $category_id = $request->input('categoryId');
+        if ($query) {
+            
+            $services=Service::with('user.profile')->where('title','like',"%{$query}%")->paginate(10);
 
-        $user=$request->user();
-        $services = $user->services;
-        return response()->json(['services'=>$services]);
-        
+            return response()->json($services);
+        }else if ($service) {
+            
+            $services=Service::with('user.profile')->where('title','like',"%{$service}%")->paginate(10);
+
+            return response()->json($services);
+        }else if ($semicategory_id) {
+            
+            $services=Service::with('user.profile')->where('semicategory_id',$semicategory_id)->paginate(10);
+
+            return response()->json($services);
+        }else if ($subcategory_id) {
+            
+            $services=Service::with('user.profile')->where('subcategory_id',$subcategory_id)->paginate(10);
+
+            return response()->json($services);
+        }else if ($category_id) {
+            
+            $services=Service::with('user.profile')->where('category_id',$category_id)->paginate(10);
+
+            return response()->json($services);
+        }
+        // $services=Service::with('user.profile')->All()->pagination(10);
+        // return response()->json(['message'=> ''],);
     }
 
     /**

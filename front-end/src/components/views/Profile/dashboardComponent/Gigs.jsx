@@ -27,12 +27,12 @@ export default function Gigs() {
     }, [services, activeTab]);
 
     // Tab change handler
-    const handleTabChange = useCallback((tab) => {
+    const handleTabChange =(tab) => {
         setActiveTab(tab);
         if(Ntf && tab==='draft'){
             setNtf(false)
         }
-    }, []);
+    };
 
 
     const closeModal=(ntf)=>{
