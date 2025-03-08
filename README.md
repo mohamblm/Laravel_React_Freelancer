@@ -83,7 +83,7 @@ The backend should now be running at [http://localhost:8000](http://localhost:80
 ### Start the React Development Server
 Run the following command to start the React development server:
    ```bash
-   npm start
+   npm run dev
    ```
 The frontend should now be running at [http://localhost:3000](http://localhost:3000).
 
