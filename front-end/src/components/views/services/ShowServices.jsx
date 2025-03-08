@@ -49,6 +49,7 @@ export default function ShowServices() {
     // fetchServices();
     if (query) {
       console.log(query)
+      dispatch({ type: 'TRUE_LOADING', payload: true })
       axiosClient.get('/services?service=' + query)
         .then((res) => {
           dispatch({ type: 'FETCH_SERVICES_SUCCESS', payload: res.data.data })
@@ -58,6 +59,7 @@ export default function ShowServices() {
     }
     else if (service) {
       console.log(service)
+      dispatch({ type: 'TRUE_LOADING', payload: true })
       axiosClient.get('/services?service=' + service)
         .then((res) => {
           dispatch({ type: 'FETCH_SERVICES_SUCCESS', payload: res.data.data })
@@ -66,6 +68,7 @@ export default function ShowServices() {
     }
     else if (subcategoryId) {
       console.log(semicategoryId)
+      dispatch({ type: 'TRUE_LOADING', payload: true })
       axiosClient.get('/services?subcategoryId=' + subcategoryId)
         .then((res) => {
           dispatch({ type: 'FETCH_SERVICES_SUCCESS', payload: res.data.data })
@@ -77,6 +80,7 @@ export default function ShowServices() {
     }
     else if (categoryId) {
       console.log(semicategoryId)
+      dispatch({ type: 'TRUE_LOADING', payload: true })
       axiosClient.get('/services?categoryId=' + categoryId)
         .then((res) => {
           dispatch({ type: 'FETCH_SERVICES_SUCCESS', payload: res.data.data })
@@ -99,6 +103,14 @@ export default function ShowServices() {
 
     <div className='d-flex flex-row flex-wrap justify-content-center gap-4'>
       {services.length ==0 && <p className='m-5'>Nothing to show!.</p>}
+      {loading && 
+        <div className="flex w-52 flex-col gap-4">
+          <div className="skeleton h-32 w-full"></div>
+          <div className="skeleton h-4 w-28"></div>
+          <div className="skeleton h-4 w-full"></div>
+          <div className="skeleton h-4 w-full"></div>
+        </div>
+    }
       {services && services.map((service, i) => (
         <Link style={{ textDecoration: 'none' }} key={i} to={`/service/${service.id}`}>
           <ServiceCard key={i}

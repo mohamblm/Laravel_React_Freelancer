@@ -1,9 +1,12 @@
 import React from 'react';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosClient from '../../../api/axios';
 import profileImage from '../../../assets/profileImage.png';
+// import LayoutMessage from '../../layouts/LayoutMessage';
+import ChatConversation from '../ChatConversation';
 import './ShowService.css';
 
 
@@ -12,11 +15,15 @@ export default function ShowService() {
   const navigate = useNavigate();
   const { errors, service } = useSelector(state => state.servicesReducer);
   const { id } = useParams();
+  const [Message, setMessage]=useState(false)
+
+  
 
   useEffect(() => {
     axiosClient.get(`/service/${id}`)
       .then((res) => {
-        dispatch({ type: 'FETCH_SERVICE_SUCCESS', payload: res.data })
+        console.log(res.data)
+        dispatch({ type: 'FETCH_SERVICE_SUCCESS', payload: res.data[0] })
       })
       .catch((err) => {
         console.log(err)
@@ -55,7 +62,7 @@ export default function ShowService() {
                   
                   height: "300px",
                   width:"auto",
-                  background: `url('http://127.0.0.1:8000/storage/${JSON.parse(service.image_url)[0]}') no-repeat center center`,
+                  background: ` url('http://127.0.0.1:8000/storage/${JSON.parse(service.image_url)[0]}') no-repeat center center`,
                   backgroundSize: "cover",
 
                 }}
@@ -116,12 +123,27 @@ export default function ShowService() {
 
               {/* Card Footer */}
               <div className="card-footer bg-white">
-                <button className="btn btn-success w-100">Order Now</button>
+                <button className="btn btn-success w-100" onClick={()=>setMessage(true)}>Message</button>
               </div>
             </div>
           </div>
         </div>
-
+        {Message && 
+        <div
+          className="position-fixed"
+          style={{
+            right: 0,
+            top: 0,
+            bottom: 0,
+            width: "400px",
+            zIndex: 1040,
+            boxShadow: "-5px 0 15px rgba(0,0,0,0.1)",
+            transition: "all 0.3s ease-in-out"
+          }}
+        >
+        <ChatConversation Contact={service.user} showConversation={Message} ColseshowConversation={setMessage}/>
+          </div>
+        }
         {/* <div className="mt-4 text-center">
       <button
         className="btn btn-outline-secondary"

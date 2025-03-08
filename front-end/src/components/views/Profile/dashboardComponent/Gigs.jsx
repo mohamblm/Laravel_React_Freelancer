@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import axiosClient from '../../../../api/axios';
 import NewGig from './NewGig';
 import { useDispatch } from 'react-redux';
-
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 export default function Gigs() {
     const dispatch=useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,7 +14,8 @@ export default function Gigs() {
     useEffect(() => {
         axiosClient.get('myservices')
             .then((res) => {
-                setServices(res.data.services || []);
+                console.log(res.data)
+                setServices(res.data || []);
             })
             .catch((err) => {
                 console.error('Error fetching services:', err);
@@ -152,9 +153,9 @@ export default function Gigs() {
                                             <td>0</td>
                                             <td>0</td>
                                             <td>
-                                                <div class="dropdown">
+                                                <div className="dropdown">
                                                     <button
-                                                        class="btn btn-primary p-0 px-2 dropdown-toggle"
+                                                        className="btn btn-primary p-0 px-2 dropdown-toggle"
                                                         type="button"
                                                         id="statusDropdown"
                                                         data-bs-toggle="dropdown"

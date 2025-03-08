@@ -3,6 +3,7 @@
 const inistialState={
     services:[],
     service:null,
+    messages:[],
     load:false,
     errors:null,
 }
@@ -21,6 +22,10 @@ export const servicesReducer=(state=inistialState,action)=>{
             return {...state, load:action.payload}
         case 'FALSE_LAODING':
             return {...state, load:action.payload}
+        case 'FETCH_MESSAGES':
+            return {...state, messages:action.payload}
+        case 'SEND_MESSAGE':
+            return {...state, messages:[...state.messages, {message:action.payload}]}
         default:
             return state;
     }

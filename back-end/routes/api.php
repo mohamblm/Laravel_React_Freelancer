@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\MessageController;
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -27,8 +28,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::apiResource('/users', UserController::class);
     Route::apiResource('/profile', ProfileController::class);
     Route::apiResource('/professionalInformations',professionalProfileController::class);
-    // Route::post('/service',[ServiceController::class,'store']);
-    Route::apiResource('/myservices', ServiceController::class);
+    Route::get('/myservices', [ServiceController::class,'myservices']);
+    Route::put('/myservices/{id}', [ServiceController::class,'update']);
+    Route::post('/myservices', [ServiceController::class,'store']);
 });
 
 
@@ -44,3 +46,9 @@ Route::get('/service/{id}',[ServiceController::class,'showOneService']);
 Route::get('search/fetchSuggestions',[SearchController::class,'fetchSuggestions']);
 
 Route::post('/verify',[AuthController::class,'verify']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/send-message', [MessageController::class, 'sendMessage']);
+    Route::get('/messages/{receiverId}', [MessageController::class, 'getMessages']);
+    Route::get('/chat-users',[MessageController::class,'getChatUsers']);
+});

@@ -6,7 +6,9 @@ import axios from '../../api/axios';
 import ModalLogin from './Login';
 import ModalSignup from './Signup';
 import SearchBar from './SearchBar';
+import { Bell } from 'lucide-react';
 import './Navbar.css';
+import ChatUsers from './ChatUsers';
 
 const Header = () => {
     const { user, token } = useSelector((state) => state.auth); // Reduced unused `error`
@@ -16,6 +18,7 @@ const Header = () => {
     const [isModalLoginOpen, setModalLoginOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
+    const [isModalChat, setModalChat] = useState(false); // [1
 
     // Use `useCallback` to memoize functions and avoid re-creation on each render
     const toggleDropdown = useCallback(() => setDropdownOpen((prev) => !prev), []);
@@ -51,6 +54,9 @@ const Header = () => {
             OpenModalSignup();
         }
     }
+    const openModalChat = () => {
+        setModalChat(true);
+    }
 
     return (
         <header className=" bg-white navbarS">
@@ -82,12 +88,16 @@ const Header = () => {
                     {/* Navigation and Icons */}
                     <div className="d-flex align-items-center gap-3">
                         {user?.role === 'service_provider' && (
-                            <Link
-                                to="/dashboard"
-                                className={`link me-2 ${location.pathname.includes('/dashboard') && 'text-success'}`}
-                            >
-                                DashBoard
-                            </Link>
+                            <div>
+                                <Bell size={30} style={{paddingRight:'10px'}} onClick={openModalChat}/>
+                                <ChatUsers show={isModalChat}  onClose={setModalChat}  />
+                                <Link
+                                    to="/dashboard"
+                                    className={`link me-2 ${location.pathname.includes('/dashboard') && 'text-success'}`}
+                                >
+                                    DashBoard
+                                </Link>
+                            </div>
                         )}
                         {token ? (
                             <div className="profile ">
@@ -149,6 +159,7 @@ const Header = () => {
             </div>
             <ModalLogin show={isModalLoginOpen} onClose={CloseModalLogin} toggle={toggle} />
             <ModalSignup show={isModalSignupOpen} onClose={CloseModalSignup} toggle={toggle} />
+            
         </header>
     );
 };

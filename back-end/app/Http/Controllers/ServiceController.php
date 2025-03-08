@@ -113,18 +113,22 @@ class ServiceController extends Controller
     }
 
     // get all services 
-    public function getAllServices(){
-        $services = Service::where('status','active')->with('user.profile')->paginate(10);
+    public function myservices(){
+        $services = Service::where('user_id',auth()->id())->get();
         return response()->json($services);
     }
 
     // get one service with its id
     public function showOneService(Service $service,$id){
+        // return response()->json(['message' => 'Service not found'], 404);
         try {
-            $service = Service::findOrFail($id);
-            return $service;
+            $service = Service::where('id',$id)->with('user.profile')->get();
+            
+            return response()->json($service);
+            // return response()->json(['message' => $id], 200);
+
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json(['message' => 'Service not found'], 404);
+            return response()->json(['message' => $e], 404);
         }
     }
 }

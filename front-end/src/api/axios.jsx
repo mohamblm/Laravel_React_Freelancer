@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Navigate as navigate } from 'react-router-dom';
 
 
 const axiosClient = axios.create({
@@ -24,6 +25,7 @@ const axiosClient = axios.create({
     if (response.status === 401) {
       localStorage.removeItem('ACCESS_TOKEN')
       // window.location.reload();
+      navigate('/')
       console.log('ikan ghid')
     } else if (response.status === 404) {
       //Show not found
